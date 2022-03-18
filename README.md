@@ -24,14 +24,22 @@ git branch -M main
 git remote add origin https://github.com/Rejomeee/my_portfolio.git
 git push -u origin main
 
-inside build project..
+to build and deploy..
+
+<!-- run -->
+flutter build web --release
+
+<!-- goTo -->
+cd build/web/
+
+<!-- run -->
 git init
 git add .
 git commit -m "first commit"
 git branch -M main
+<!-- add origin your own github repo -->
 git remote add origin https://github.com/Rejomeee/aronejerome.github.io.git
 git push -u origin main --force
 
-flutter build web --release
-
+<!-- open your repo and follow the steps -->
 Settings > GitHub Pages > Main > /(root) > Save
