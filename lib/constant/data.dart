@@ -60,6 +60,7 @@ class Data {
             'Firebase',
             'Xcode',
             'Google Map Services',
+            'Socket',
           ],
         },
       ],
@@ -154,10 +155,73 @@ class Data {
   ];
 
   static const EXPAND_SKILLS = [
+    'Team Management',
     'Effecient Debugging',
+    'Leadership',
     'Clean Architectural Structure',
     'Different types of unit testing',
     'Knowledge of quality standards',
+    'Documentation',
+  ];
+
+  static const PROJECTS = [
+    {
+      'type': "Project Management App for Construction Firm",
+      'description':
+          "My role was to develop an iOS Application using Flutter/Dart that uses different services/tools like Google Maps, REST API, Bloc State Management, and Xcode. It was deployed in the App store but only through invitation since it was exclusive to a company.",
+      'features': [
+        'Project Management',
+        'Realtime Chat with Image, Voice and Text Sending',
+        'Realtime Notification',
+        'Project Calendar',
+        'Image uploading with image compressor',
+        'User Profile Management',
+        'User Authentication',
+      ],
+      'build_with': [
+        'Flutter',
+        'Laravel',
+        'Xcode',
+        'Google Map Services',
+        'Socket.IO in JS'
+      ],
+    },
+    {
+      'type': "Delivery App",
+      'description':
+          "My role for this project was to develop the modules front/backend and integrate APIs.",
+      'features': [
+        'Driver booking',
+        'User Authentication with OTP',
+        'Social Authentication',
+        'Profile Managment',
+        'Messaging',
+        'Payment Gateway',
+      ],
+      'build_with': [
+        'Flutter',
+        'Android Studio',
+        'Firebase',
+        'Promotexter',
+      ],
+    },
+    {
+      'type': "Social Media App",
+      'description':
+          "My role here was to develop and integrate APIs for the modules of mobile app for Android and iOS",
+      'features': [
+        'Upload Images',
+        'Filter Creation',
+        'Realtime Chat',
+        'User Authentication with Social Authentication',
+      ],
+      'build_with': [
+        'Ionic',
+        'Opoink',
+        'Zend Framework',
+        'Android Studio',
+      ],
+    }
   ];
 
   static const ABOUT_ME = [

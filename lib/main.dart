@@ -1,7 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_my_portfolio/constant/data.dart';
 import 'package:flutter_my_portfolio/constant/style.dart';
+import 'package:rive/rive.dart';
+import 'package:flutter/services.dart';
+
+import 'constant/bloc_providers.dart';
+import 'cubit/flutter_bird/flutter_bird_cubit.dart';
 
 void main() {
   runApp(const MyApp());
@@ -29,13 +35,16 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+    return MultiBlocProvider(
+      providers: multipleProviders,
+      child: MaterialApp(
+        title: Data.WEB_TITLE,
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        home: const MyHomePage(),
       ),
-      home: const MyHomePage(),
     );
   }
 }
@@ -47,88 +56,128 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  /* Animation Start */
+  SMIInput<bool>? flutterBirdIsClicked;
+
+  loadAnimations() async {
+    Artboard? flutterBirdArtboard;
+
+    await rootBundle.load('assets/animations/flutter_bird.riv').then(
+      (data) async {
+        final file = RiveFile.import(data);
+        final artboard = file.mainArtboard;
+
+        final controller =
+            StateMachineController.fromArtboard(artboard, 'birb');
+        if (controller != null) {
+          artboard.addController(controller);
+          flutterBirdIsClicked = controller.findInput('dance');
+          flutterBirdIsClicked?.value = true;
+        }
+        flutterBirdArtboard = artboard;
+      },
+    );
+
+    context.read<FlutterBirdCubit>().animateFlutterBird(flutterBirdArtboard);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    loadAnimations();
+  }
+
+  /* Animation End */
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (_, constrain) {
-        return
-            // constrain.maxWidth >= MIN_TABLET_SIZE
-            // ? _buildTabletBody(constrain.maxWidth)
-            // ?
-            Scaffold(
-          body: Container(
-            height: constrain.maxHeight,
-            decoration: const BoxDecoration(
-              color: kBackgroundColor,
-            ),
-            child: Stack(
-              alignment: AlignmentDirectional.topCenter,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Flexible(
-                      flex: 4,
-                      child: leftContainer(),
-                    ),
-                    const SizedBox(
-                      width: 35,
-                    ),
-                    const Expanded(
-                      flex: 8,
-                      child: SizedBox(),
-                    ),
-                  ],
-                ),
-                ListView(
-                  shrinkWrap: true,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Flexible(
-                          flex: 4,
-                          child: SizedBox(
-                            width: constrain.maxWidth * 0.5,
+        return constrain.maxWidth >= MIN_TABLET_SIZE
+                // ? _buildTabletBody(constrain.maxWidth)
+                ? Scaffold(
+                    body: Container(
+                      height: constrain.maxHeight,
+                      decoration: const BoxDecoration(
+                        color: kBackgroundColor,
+                      ),
+                      child: Stack(
+                        alignment: AlignmentDirectional.topCenter,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              Flexible(
+                                flex: 4,
+                                child: leftContainer(),
+                              ),
+                              const SizedBox(
+                                width: 35,
+                              ),
+                              const Expanded(
+                                flex: 8,
+                                child: SizedBox(),
+                              ),
+                            ],
                           ),
-                        ),
-                        Flexible(
-                          flex: 8,
-                          child: SizedBox(
-                            width: constrain.maxWidth * 0.5,
-                            child: Column(
-                              children: [
-                                introductionCard(),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                whiteContainer(aboutMeCard('About me')),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                whiteContainer(experienceCard('Experiences')),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                whiteContainer(
-                                    expandMySkillsCard('Expand my skills')),
-                                const SizedBox(
-                                  height: 20,
-                                ),
-                              ],
-                            ),
+                          ListView(
+                            shrinkWrap: true,
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Flexible(
+                                    flex: 4,
+                                    child: SizedBox(
+                                      width: constrain.maxWidth * 0.5,
+                                    ),
+                                  ),
+                                  Flexible(
+                                    flex: 8,
+                                    child: SizedBox(
+                                      width: constrain.maxWidth * 0.5,
+                                      child: Column(
+                                        children: [
+                                          introductionCard(),
+                                          const SizedBox(
+                                            height: 10,
+                                          ),
+                                          whiteContainer(
+                                              aboutMeCard('About me')),
+                                          const SizedBox(
+                                            height: 10,
+                                          ),
+                                          whiteContainer(
+                                              experienceCard('Experiences')),
+                                          const SizedBox(
+                                            height: 10,
+                                          ),
+                                          whiteContainer(
+                                              projectCard('Projects')),
+                                          const SizedBox(
+                                            height: 10,
+                                          ),
+                                          whiteContainer(expandMySkillsCard(
+                                              'Expand my skills')),
+                                          const SizedBox(
+                                            height: 20,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              )
+                            ],
                           ),
-                        ),
-                      ],
-                    )
-                  ],
-                ),
-              ],
-            ),
-          ),
-        );
-        // : const Text('mobile');
-        // : _buildPhoneBody();
+                        ],
+                      ),
+                    ),
+                  )
+                : const Scaffold(
+                    body: Center(
+                        child: Text('Mobile view soon. Please use PC :D')))
+            // : _buildPhoneBody()
+            ;
       },
     );
   }
@@ -217,7 +266,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return Container(
       margin: const EdgeInsets.only(top: 4),
       padding: const EdgeInsets.symmetric(
-        vertical: 150,
+        vertical: 80,
         horizontal: 70,
       ),
       decoration: const BoxDecoration(
@@ -230,11 +279,37 @@ class _MyHomePageState extends State<MyHomePage> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            'Animated hi im arone',
-            style: kHeadline1.copyWith(
-              color: kColorWhite,
-            ),
+          Row(
+            children: [
+              Text(
+                "Hi! I'm Arone ",
+                style: kHeadline1.copyWith(
+                  color: kColorBlack,
+                ),
+              ),
+              BlocBuilder<FlutterBirdCubit, FlutterBirdState>(
+                builder: (context, flutterBirdState) {
+                  return SizedBox(
+                    width: 60,
+                    height: 75,
+                    // width: MediaQuery.of(context).size.width,
+                    child: flutterBirdState is FlutterBirdMove
+                        ? GestureDetector(
+                            onTap: () {
+                              flutterBirdIsClicked?.value =
+                                  flutterBirdIsClicked?.value == false
+                                      ? true
+                                      : false;
+                            },
+                            child: Rive(
+                                artboard:
+                                    flutterBirdState.flutterBirdArtboard!),
+                          )
+                        : const SizedBox(),
+                  );
+                },
+              ),
+            ],
           ),
           Text(
             '“One of my most productive days was throwing away 1000 lines of code.”',
@@ -263,9 +338,7 @@ class _MyHomePageState extends State<MyHomePage> {
               OutlinedButton.icon(
                 style: outlineButtonStyle,
                 icon: const Icon(Icons.email),
-                onPressed: () {
-                  print('hehe');
-                },
+                onPressed: () {},
                 label: const Text('Hire me'),
               )
             ],
@@ -349,6 +422,7 @@ class _MyHomePageState extends State<MyHomePage> {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                SizedBox(height: index != 0 ? 20 : 0),
                 const SizedBox(
                   height: 15,
                 ),
@@ -406,7 +480,12 @@ class _MyHomePageState extends State<MyHomePage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          const Flexible(flex: 3, child: Text('Tools: ')),
+                          const Flexible(
+                              flex: 3,
+                              child: Text(
+                                'Tools: ',
+                                style: kTextSub,
+                              )),
                           Flexible(
                             flex: 9,
                             child: Align(
@@ -427,7 +506,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                               color: kBadgeColorGreen),
                                           child: Text(
                                             tool,
-                                            style: kTextSub.copyWith(
+                                            style: kTextSub2.copyWith(
                                                 color: kColorWhite),
                                           ),
                                         ))
@@ -446,6 +525,138 @@ class _MyHomePageState extends State<MyHomePage> {
               ],
             );
           },
+        ),
+      ],
+    );
+  }
+
+  Widget projectCard(title) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text('$title', style: kHeadline3),
+        Container(
+          height: 8,
+          width: 40,
+          margin: const EdgeInsets.only(top: 10),
+          decoration: const BoxDecoration(color: kColorLavender),
+        ),
+        const SizedBox(
+          height: 10,
+        ),
+        ListView.builder(
+          physics: const NeverScrollableScrollPhysics(),
+          padding: const EdgeInsets.only(top: 10),
+          shrinkWrap: true,
+          itemCount: (Data.PROJECTS as dynamic).length,
+          itemBuilder: (context, index) => Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Flexible(
+                      flex: 3,
+                      child: Text(
+                        '${(Data.PROJECTS[index]['type'] as dynamic)}: ',
+                        style: kTextSub.copyWith(fontStyle: FontStyle.italic),
+                      ),
+                    ),
+                    Flexible(
+                      flex: 9,
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          '${(Data.PROJECTS[index]['description'] as dynamic)}',
+                          style:
+                              kTextSub2.copyWith(fontWeight: FontWeight.w800),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Flexible(
+                        flex: 3,
+                        child: Text(
+                          'Features: ',
+                          style: kTextSub.copyWith(fontStyle: FontStyle.italic),
+                        )),
+                    Flexible(
+                      flex: 9,
+                      child: ListView.builder(
+                        physics: const NeverScrollableScrollPhysics(),
+                        padding: const EdgeInsets.only(top: 10),
+                        shrinkWrap: true,
+                        itemCount: (Data.PROJECTS[index]['features'] as dynamic)
+                            .length,
+                        itemBuilder: (context, featureIndex) => Wrap(
+                          children: [
+                            Text(
+                                '- ${(Data.PROJECTS[index]['features'] as dynamic)[featureIndex]}',
+                                style: kTextSub2),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Flexible(
+                        flex: 3,
+                        child: Text('Tools: ',
+                            style: kTextSub.copyWith(
+                                fontStyle: FontStyle.italic))),
+                    Flexible(
+                      flex: 9,
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Wrap(
+                          spacing: 5,
+                          runSpacing: 5,
+                          children: ((Data.PROJECTS[index]['build_with']
+                                  as dynamic) as List<String>)
+                              .map((tool) => Container(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 12, vertical: 5),
+                                    decoration: const BoxDecoration(
+                                        shape: BoxShape.rectangle,
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(50)),
+                                        color: kBadgeColorGreen),
+                                    child: Text(
+                                      tool,
+                                      style: kTextSub2.copyWith(
+                                          color: kColorWhite),
+                                    ),
+                                  ))
+                              .toList(),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
+        const SizedBox(
+          height: 20,
         ),
       ],
     );
