@@ -32,6 +32,7 @@ const kColorBlueGreen = [
 
 const kColorGreen = Color(0xFF00B200);
 const kBadgeColorGreen = Color(0xFF10BC21);
+const kSocialBgIcon = Color(0xFF183153);
 
 const kColorOrange = [
   Color(0xFFFF7400),

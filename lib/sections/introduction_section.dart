@@ -1,10 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_my_portfolio/constant/data.dart';
 import 'package:flutter_my_portfolio/constant/style.dart';
 import 'package:flutter_my_portfolio/cubit/flutter_bird/flutter_bird_cubit.dart';
 import 'package:rive/rive.dart';
 import 'package:flutter/services.dart';
+// import 'package:url_launcher/url_launcher.dart';
+import 'dart:js' as js;
 
 class IntroductionSection extends StatefulWidget {
   const IntroductionSection({Key? key}) : super(key: key);
@@ -117,20 +120,24 @@ class _IntroductionSectionState extends State<IntroductionSection> {
               ElevatedButton.icon(
                 style: raisedButtonStyle,
                 icon: const Icon(Icons.download),
-                onPressed: () {},
+                onPressed: _downloadCV,
                 label: const Text('Download'),
               ),
-              OutlinedButton.icon(
-                style: outlineButtonStyle,
-                icon: const Icon(Icons.email),
-                onPressed: () {},
-                label: const Text('Hire me'),
-              )
+              // OutlinedButton.icon(
+              //   style: outlineButtonStyle,
+              //   icon: const Icon(Icons.email),
+              //   onPressed: () {},
+              //   label: const Text('Hire me'),
+              // )
             ],
           )
         ],
       ),
     );
+  }
+
+  void _downloadCV() {
+    js.context.callMethod('open', [Data.CV_URL]);
   }
 
   final ButtonStyle raisedButtonStyle = ElevatedButton.styleFrom(

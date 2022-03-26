@@ -2,11 +2,12 @@ class Data {
   static const WEB_TITLE = "Arone Jerome - Mobile Developer";
   static const NAME = "Arone Jerome Malicse";
   static const ROLE = "Flutter Mobile Developer";
-  static const PHONE_NUMBER = "+956 110 6644";
+  static const PHONE_NUMBER = "09924207735";
   static const EMAIL = "arone.malicse.os@gmail.com";
   static const LOCATION = "General Trias, Cavite";
   static const BIRTHDAY = "12 September, 1997";
 
+/* ADD SOCIAL MEDIA ICONS ON BUTTON */
   static const AVATAR = "assets/images/ako.jpg";
 
   static const FACEBOOK_URL = "https://www.facebook.com/jejeromeee/";
@@ -14,6 +15,8 @@ class Data {
   static const GITHUB_URL = "https://github.com/Rejomeee/";
   static const LINKEDIN_URL =
       "https://www.linkedin.com/in/arone-jerome-malicse-106a85188/";
+  static const PORTFOLIO_URL =
+      "https://rejomeee.github.io/aronejerome.github.io/";
 
   static const HOME_SENTENCE =
       "“One of my most productive days was throwing away 1000 lines of code.”";
@@ -183,7 +186,8 @@ class Data {
         'Laravel',
         'Xcode',
         'Google Map Services',
-        'Socket.IO in JS'
+        'Socket.IO in JS',
+        'RIVE Animation'
       ],
     },
     {
@@ -225,13 +229,12 @@ class Data {
   ];
 
   static const ABOUT_ME = [
-    "I'm an experienced software engineer who constantly seeks out innovative solutions to everyday problems. In my three years in this industry, I've honed my analytical thinking and collaboration skills, and I love working with a team. I've also had the opportunity to do Web Development using Laravel/Angular and for Mobile Development using Flutter.",
+    "I'm an experienced software engineer who constantly seeks out innovative solutions to everyday problems. In my three years in this industry, I've honed my analytical thinking and collaboration skills, and I love working with a team. I've also had the opportunity to do Web Development using Laravel/Angular and for Mobile Development using Flutter. I can do some animation using RIVE and implement it.",
     "I'm excited to broaden my knowledge in order to improve my executions, testing, and user experience."
   ];
 
   static const MESSAGE_API =
       "https://us-central1-workout-e1b53.cloudfunctions.net/api/message";
 
-  static const CV_URL =
-      "https://www.topcv.vn/xem-cv/VlgCAFNUVAJWBFJUUg1UUwxVV10DUVFSWQFTAQfafe";
+  static const CV_URL = "https://usaupload.com/6e9D/Arone_Jerome_Resume.pdf";
 }

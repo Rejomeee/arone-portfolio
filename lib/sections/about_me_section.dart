@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_my_portfolio/constant/data.dart';
 import 'package:flutter_my_portfolio/constant/style.dart';
+import 'dart:js' as js;
 
 class AboutMeSection extends StatelessWidget {
   final String? title;
@@ -44,6 +45,81 @@ class AboutMeSection extends StatelessWidget {
         ),
         const SizedBox(
           height: 25,
+        ),
+        const Text(
+          'Info',
+          style: kHeadline3,
+        ),
+        const SizedBox(
+          height: 10,
+        ),
+        Wrap(
+          spacing: 30,
+          runSpacing: 15,
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Contact No.',
+                  style: kTextSub.copyWith(
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+                const SizedBox(
+                  height: 5,
+                ),
+                MouseRegion(
+                  cursor: SystemMouseCursors.click,
+                  child: GestureDetector(
+                    onTap: () {
+                      // mailto:support@email.com?
+                      js.context
+                          .callMethod('open', ['tel:${Data.PHONE_NUMBER}']);
+                    },
+                    child: Text(
+                      Data.PHONE_NUMBER,
+                      style: kTextBody.copyWith(
+                          fontWeight: FontWeight.w400, color: kColorBlue),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Email',
+                  style: kTextSub.copyWith(
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+                const SizedBox(
+                  height: 5,
+                ),
+                MouseRegion(
+                  cursor: SystemMouseCursors.click,
+                  child: GestureDetector(
+                    onTap: () {
+                      // mailto:support@email.com?
+                      js.context.callMethod('open', ['mailto:${Data.EMAIL}']);
+                    },
+                    child: Text(
+                      Data.EMAIL,
+                      style: kTextBody.copyWith(
+                        fontWeight: FontWeight.w400,
+                        color: kColorBlue,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+        const SizedBox(
+          height: 10,
         ),
         const Text(
           'Education',

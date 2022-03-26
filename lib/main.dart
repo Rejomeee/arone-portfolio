@@ -5,6 +5,7 @@ import 'package:flutter_my_portfolio/constant/data.dart';
 import 'package:flutter_my_portfolio/constant/style.dart';
 import 'package:flutter_my_portfolio/sections/about_me_section.dart';
 import 'package:flutter_my_portfolio/sections/expand_my_skills_section.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:rive/rive.dart';
 import 'package:flutter/services.dart';
 
@@ -14,6 +15,7 @@ import 'sections/experience_section.dart';
 import 'sections/introduction_section.dart';
 import 'sections/left_container_section.dart';
 import 'sections/project_section.dart';
+import 'dart:js' as js;
 
 void main() {
   runApp(const MyApp());
@@ -192,6 +194,40 @@ class _MyHomePageState extends State<MyHomePage> {
                                           scrollToIndex(4);
                                         },
                                       ),
+                                      const SizedBox(
+                                        height: 20,
+                                      ),
+                                      Wrap(
+                                        spacing: 6,
+                                        children: [
+                                          SocIcon(
+                                            onTap: () {
+                                              js.context.callMethod(
+                                                  'open', [Data.FACEBOOK_URL]);
+                                            },
+                                            icon: FontAwesomeIcons.facebookF,
+                                          ),
+                                          // SocIcon(
+                                          //   onTap: () {},
+                                          //   icon: FontAwesomeIcons.twitter,
+                                          // ),
+                                          SocIcon(
+                                            onTap: () {
+                                              js.context.callMethod(
+                                                  'open', [Data.LINKEDIN_URL]);
+                                            },
+                                            icon: FontAwesomeIcons.linkedin,
+                                          ),
+                                          const SocIcon(
+                                            onTap: null,
+                                            //  () {
+                                            //   js.context.callMethod('open',
+                                            //       [Data.PORTFOLIO_URL]);
+                                            // }
+                                            icon: FontAwesomeIcons.globe,
+                                          ),
+                                        ],
+                                      )
                                     ],
                                   ),
                                 ),
@@ -264,6 +300,45 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
+class SocIcon extends StatelessWidget {
+  const SocIcon({
+    Key? key,
+    this.onTap,
+    this.icon,
+    this.color,
+  }) : super(key: key);
+
+  final void Function()? onTap;
+  final IconData? icon;
+  final Color? color;
+
+  @override
+  Widget build(BuildContext context) {
+    return MouseRegion(
+      cursor: onTap == null
+          ? SystemMouseCursors.forbidden
+          : SystemMouseCursors.click,
+      child: GestureDetector(
+        onTap: onTap,
+        child: Container(
+          padding: const EdgeInsets.all(5),
+          decoration: BoxDecoration(
+            borderRadius: const BorderRadius.all(
+              Radius.circular(25),
+            ),
+            color: onTap == null ? kTextColorLightGreyLines : kColorWhite,
+          ),
+          child: Icon(
+            icon,
+            size: 16.0,
+            color: onTap == null ? kTextColorGrey : color,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 class NavigationTab extends StatelessWidget {
   const NavigationTab({
     Key? key,
@@ -277,28 +352,31 @@ class NavigationTab extends StatelessWidget {
   final void Function()? onTap;
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 5.0),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(
-              icon,
-              color: kColorWhite,
-              size: 18,
-            ),
-            const SizedBox(
-              width: 5,
-            ),
-            Text(
-              '$title',
-              style: kTextSub.copyWith(
+    return MouseRegion(
+      cursor: SystemMouseCursors.click,
+      child: GestureDetector(
+        onTap: onTap,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 5.0),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(
+                icon,
                 color: kColorWhite,
+                size: 18,
               ),
-            ),
-          ],
+              const SizedBox(
+                width: 5,
+              ),
+              Text(
+                '$title',
+                style: kTextSub.copyWith(
+                  color: kColorWhite,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
