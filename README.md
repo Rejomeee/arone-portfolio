@@ -43,3 +43,6 @@ git push -u origin main --force
 
 <!-- open your repo and follow the steps -->
 Settings > GitHub Pages > Main > /(root) > Save
+
+<!-- Firebase setup -->
+https://bhavikvashi1804.medium.com/firebase-cloud-functions-9d078c38dea2

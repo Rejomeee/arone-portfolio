@@ -38,6 +38,8 @@ dependencies:
   rive: ^0.8.4
   flutter_bloc: ^8.0.0
   font_awesome_flutter: any
+  http: ^0.13.4
+  reactive_forms: any
 
 dev_dependencies:
   flutter_test:

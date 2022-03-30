@@ -5,6 +5,7 @@ import 'package:flutter_my_portfolio/constant/data.dart';
 import 'package:flutter_my_portfolio/constant/style.dart';
 import 'package:flutter_my_portfolio/sections/about_me_section.dart';
 import 'package:flutter_my_portfolio/sections/expand_my_skills_section.dart';
+import 'package:flutter_my_portfolio/sections/get_in_touch.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:rive/rive.dart';
 import 'package:flutter/services.dart';
@@ -139,6 +140,14 @@ class _MyHomePageState extends State<MyHomePage> {
                                                 title: 'Expand my skills'),
                                           ),
                                           const SizedBox(
+                                            height: 15,
+                                          ),
+                                          whiteContainer(
+                                            GetInTouchSection(
+                                                key: keys[5],
+                                                title: 'Get in touch'),
+                                          ),
+                                          const SizedBox(
                                             height: 25,
                                           ),
                                         ],
@@ -188,10 +197,17 @@ class _MyHomePageState extends State<MyHomePage> {
                                         },
                                       ),
                                       NavigationTab(
+                                        icon: Icons.star,
+                                        title: 'Interested',
+                                        onTap: () {
+                                          scrollToIndex(4);
+                                        },
+                                      ),
+                                      NavigationTab(
                                         icon: Icons.contacts,
                                         title: 'Contact',
                                         onTap: () {
-                                          scrollToIndex(4);
+                                          scrollToIndex(5);
                                         },
                                       ),
                                       const SizedBox(
@@ -255,6 +271,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   final keys = [
+    GlobalKey(),
     GlobalKey(),
     GlobalKey(),
     GlobalKey(),
