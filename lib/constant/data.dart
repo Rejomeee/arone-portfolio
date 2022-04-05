@@ -30,7 +30,8 @@ class Data {
 
   static const ABOUT_EDUCATION_SCHOOL =
       'Bachelor of Science in Information Technology';
-  static const ABOUT_EDUCATION_SCHOOL_YEAR = '2015 - 2019 AMA Computer College';
+  static const ABOUT_EDUCATION_SCHOOL_YEAR =
+      '2015 - 2019 AMA Computer College - Cavite';
 
   static const EXPERIENCES = [
     {
