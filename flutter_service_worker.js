@@ -15,8 +15,8 @@ const RESOURCES = {
 "assets/packages/font_awesome_flutter/lib/fonts/fa-brands-400.ttf": "d1722d5cf2c7855862f68edb85e31f88",
 "assets/packages/cupertino_icons/assets/CupertinoIcons.ttf": "6d342eb68f170c97609e9da345464e5e",
 "assets/fonts/MaterialIcons-Regular.otf": "4e6447691c9509f7acdbf8a931a85ca1",
-"index.html": "d8e2d2c889236143944c036929b67d9e",
-"/": "d8e2d2c889236143944c036929b67d9e",
+"index.html": "5ef0f43ef277c864a303ca04f5520194",
+"/": "5ef0f43ef277c864a303ca04f5520194",
 "main.dart.js": "3a61d392a6fbea9ca3bbbf29e4eb0175",
 "version.json": "763e992bb62d41ae38b1b2c065b0d8b4"
 };
