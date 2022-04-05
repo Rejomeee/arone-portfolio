@@ -66297,7 +66297,7 @@ V(a,b){var s=null
 return T.mz(D.ku(s,new T.eg(C.Cv,T.fY(H.a([L.apv(this.d,C.k,18),C.Kh,L.c7(this.c,s,s,s,C.ay.dC(C.k),s,s)],t.p),C.av,C.b5,C.fc),s),C.ag,!1,s,s,s,s,s,s,s,s,s,s,s,s,this.e,s,s,s,s,s,s),C.cP,s,s,s,!0)}}
 V.EU.prototype={
 V(a,b){var s=null
-return T.eU(H.a([C.bb,L.c7(this.c,s,s,s,C.cU,s,s),M.cP(s,s,C.p,s,s,C.d8,s,8,C.b3,s,s,s,40),C.aV,C.O_,C.bK,B.rL(new V.Wh(),2,s,s,!0),C.wU,C.NU,C.bK,C.NV,C.iB,C.NY],t.p),C.a0,C.P)}}
+return T.eU(H.a([C.bb,L.c7(this.c,s,s,s,C.cU,s,s),M.cP(s,s,C.p,s,s,C.d8,s,8,C.b3,s,s,s,40),C.aV,C.O_,C.bK,B.rL(new V.Wh(),2,s,s,!0),C.wU,C.NV,C.bK,C.NW,C.iB,C.NS],t.p),C.a0,C.P)}}
 V.Wh.prototype={
 $2(a,b){var s=null,r=b===0?0:20
 return new T.eg(new V.aV(0,r,0,0),L.c7(C.EE[b],s,s,s,C.ay.dC(C.kG),s,s),s)},
@@ -66446,7 +66446,7 @@ return P.a8($async$xO,r)},
 b7(){this.bO()
 this.xO()},
 V(a,b){var s=null,r=t.p,q=T.fY(H.a([L.c7("Hi! I'm Arone ",s,s,s,C.xe.dC(C.q),s,s),new O.wt(new K.ae_(this),s,s,s,t._w)],r),C.av,C.b5,C.P),p=L.c7("\u201cOne of my most productive days was throwing away 1000 lines of code.\u201d",s,s,s,C.xe.dC(C.k),s,s),o=L.c7("- Ken Thompson -",s,s,s,C.LG.adr(C.k,C.ex),C.c3,s)
-return M.cP(s,T.eU(H.a([q,p,new T.eQ(C.ju,s,s,o,s),T.By(H.a([new D.PU(this.ga45(),s,this.e,C.p,s,!1,new D.PV(C.NT,C.D9,s),s)],r),0,10)],r),C.a0,C.P),C.p,s,s,C.yk,s,s,C.ch,C.CF,s,s,s)},
+return M.cP(s,T.eU(H.a([q,p,new T.eQ(C.ju,s,s,o,s),T.By(H.a([new D.PU(this.ga45(),s,this.e,C.p,s,!1,new D.PV(C.NU,C.D9,s),s)],r),0,10)],r),C.a0,C.P),C.p,s,s,C.yk,s,s,C.ch,C.CF,s,s,s)},
 a46(){$.hR().ix("open",["https://bit.ly/aronemalicseresume"])}}
 K.ae0.prototype={
 $1(a){return this.Uq(a)},
@@ -75821,8 +75821,8 @@ C.u=new P.S(0,0)
 C.CM=new U.HU(C.u,C.u)
 C.ao=new F.HY("FlexFit.loose")
 C.ay=new A.u(!0,C.q,null,null,null,null,16,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null)
-C.NW=new L.fw("Tools: ",C.ay,null,null,null,null,null,null)
-C.CN=new T.dX(3,C.ao,C.NW,null)
+C.NX=new L.fw("Tools: ",C.ay,null,null,null,null,null,null)
+C.CN=new T.dX(3,C.ao,C.NX,null)
 C.CO=new S.xx(null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null)
 C.hA=new N.xy("FloatingCursorDragState.Start")
 C.eu=new N.xy("FloatingCursorDragState.Update")
@@ -77327,7 +77327,7 @@ C.Ko=new N.jN("SnackBarClosedReason.hide")
 C.QW=new N.jN("SnackBarClosedReason.remove")
 C.iC=new N.jN("SnackBarClosedReason.timeout")
 C.Kp=new K.Ay(null,null,null,null,null,null,null)
-C.NS=new L.fw("Thanks for your message. Will check on that. :D",null,null,null,null,null,null,null)
+C.NT=new L.fw("Thanks for your message. Will check on that. :D",null,null,null,null,null,null,null)
 C.BM=new P.G(4293457385)
 C.BF=new P.G(4291356361)
 C.Bz=new P.G(4289058471)
@@ -77341,10 +77341,10 @@ C.Bd=new P.G(4279983648)
 C.He=new H.cf([50,C.BM,100,C.BF,200,C.Bz,300,C.Bw,400,C.Bu,500,C.Bq,600,C.Bp,700,C.Bl,800,C.Bk,900,C.Bd],t.pl)
 C.HS=new E.oM(C.He,4283215696)
 C.l_=new P.aS(4e6)
-C.Kq=new N.n3(C.NS,C.HS,null,null,null,null,null,null,null,C.l_,null,null,C.eq,null)
-C.NX=new L.fw("Something went wrong.",null,null,null,null,null,null,null)
+C.Kq=new N.n3(C.NT,C.HS,null,null,null,null,null,null,null,C.l_,null,null,C.eq,null)
+C.NY=new L.fw("Something went wrong.",null,null,null,null,null,null,null)
 C.HT=new E.oM(C.id,4294198070)
-C.wW=new N.n3(C.NX,C.HT,null,null,null,null,null,null,null,C.l_,null,null,C.eq,null)
+C.wW=new N.n3(C.NY,C.HT,null,null,null,null,null,null,null,C.l_,null,null,C.eq,null)
 C.CZ=new K.a1y(61612,"FontAwesomeSolid","font_awesome_flutter",!1)
 C.Kr=new F.Az(null,C.CZ,null)
 C.Ks=new M.AC("SpringType.criticallyDamped")
@@ -77609,10 +77609,10 @@ C.L7=new A.u(!1,null,null,null,null,null,10,C.D,null,1.5,null,C.L,null,null,null
 C.NQ=new R.e4(C.LX,C.LY,C.LZ,C.M_,C.M0,C.LQ,C.LJ,C.MB,C.MC,C.MD,C.Ln,C.Mr,C.L7)
 C.xf=new U.Ns("TextWidthBasis.longestLine")
 C.NR=new L.fw("I'd like to expand my skills and knowledge in several fields:",C.e_,null,null,null,null,null,null)
-C.NT=new L.fw("Download",null,null,null,null,null,null,null)
-C.NU=new L.fw("Education",C.cU,null,null,null,null,null,null)
-C.NV=new L.fw("Bachelor of Science in Information Technology",C.cV,null,null,null,null,null,null)
-C.NY=new L.fw("2015 - 2019 AMA Computer College",C.ay,null,null,null,null,null,null)
+C.NS=new L.fw("2015 - 2019 AMA Computer College - Cavite",C.ay,null,null,null,null,null,null)
+C.NU=new L.fw("Download",null,null,null,null,null,null,null)
+C.NV=new L.fw("Education",C.cU,null,null,null,null,null,null)
+C.NW=new L.fw("Bachelor of Science in Information Technology",C.cV,null,null,null,null,null,null)
 C.LH=new A.u(!0,C.q,null,null,null,null,34,C.bA,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null)
 C.O_=new L.fw("Yo,",C.LH,null,null,null,null,null,null)
 C.QX=new S.aaC("ThemeMode.system")
