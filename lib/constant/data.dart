@@ -15,8 +15,7 @@ class Data {
   static const GITHUB_URL = "https://github.com/Rejomeee/";
   static const LINKEDIN_URL =
       "https://www.linkedin.com/in/arone-jerome-malicse-106a85188/";
-  static const PORTFOLIO_URL =
-      "https://rejomeee.github.io/aronejerome.github.io/";
+  static const PORTFOLIO_URL = "https://rejomeee.github.io/arone-portfolio/";
 
   static const HOME_SENTENCE =
       "“One of my most productive days was throwing away 1000 lines of code.”";
