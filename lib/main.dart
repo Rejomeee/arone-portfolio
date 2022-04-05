@@ -243,10 +243,10 @@ class _MyHomePageState extends State<MyHomePage> {
                                               ),
                                               const SocIcon(
                                                 onTap: null,
-                                                //  () {
+                                                //     () {
                                                 //   js.context.callMethod('open',
                                                 //       [Data.PORTFOLIO_URL]);
-                                                // }
+                                                // },
                                                 icon: FontAwesomeIcons.globe,
                                               ),
                                             ],

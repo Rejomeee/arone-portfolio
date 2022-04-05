@@ -57,6 +57,9 @@ class AboutMeSection extends StatelessWidget {
           Data.ABOUT_EDUCATION_SCHOOL,
           style: kTextSub2,
         ),
+        const SizedBox(
+          height: 5,
+        ),
         const Text(
           Data.ABOUT_EDUCATION_SCHOOL_YEAR,
           style: kTextSub,
