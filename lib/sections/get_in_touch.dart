@@ -128,38 +128,28 @@ class _GetInTouchSectionState extends State<GetInTouchSection> {
           contactForm.control('message').value,
           contactForm.control('subject').value,
         );
-        // http.post(Data.MESSAGE_API, body: {
-        //   "name": name,
-        //   "email": email,
-        //   "subject": subject,
-        //   "target_mail": targetMail,
-        //   "message": message,
-        // });
         final statusCode = response.statusCode;
-        print(statusCode);
         if (statusCode == 200) {
           Scaffold.of(context).showSnackBar(
-            SnackBar(
-              content: Text("Thank for your message ^^~"),
+            const SnackBar(
+              content: Text("Thanks for your message. Will check on that. :D"),
               backgroundColor: Colors.green,
             ),
           );
           contactForm.reset();
         } else {
-          print(response.body);
           Scaffold.of(context).showSnackBar(
-            SnackBar(
-              content: Text("Something went wrong :("),
+            const SnackBar(
+              content: Text("Something went wrong."),
               backgroundColor: Colors.red,
             ),
           );
         }
         toggleIsSubmitting(false);
       } on Exception catch (e) {
-        print(e);
         Scaffold.of(context).showSnackBar(
-          SnackBar(
-            content: Text("Something went wrong :("),
+          const SnackBar(
+            content: Text("Something went wrong."),
             backgroundColor: Colors.red,
           ),
         );

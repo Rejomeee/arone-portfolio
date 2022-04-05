@@ -83,6 +83,10 @@ class _MyHomePageState extends State<MyHomePage> {
                       child: Stack(
                         alignment: AlignmentDirectional.topCenter,
                         children: [
+                          const RiveAnimation.asset(
+                            'assets/animations/clouds_bg.riv',
+                            fit: BoxFit.fill,
+                          ),
                           ListView(
                             shrinkWrap: true,
                             children: [
@@ -163,89 +167,101 @@ class _MyHomePageState extends State<MyHomePage> {
                             children: [
                               Flexible(
                                 flex: 4,
-                                child: LeftContainerSection(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      NavigationTab(
-                                        icon: Icons.home,
-                                        title: 'Home',
-                                        onTap: () {
-                                          scrollToIndex(0);
-                                        },
-                                      ),
-                                      NavigationTab(
-                                        icon: Icons.account_box,
-                                        title: 'About',
-                                        onTap: () {
-                                          scrollToIndex(1);
-                                        },
-                                      ),
-                                      NavigationTab(
-                                        icon: Icons.book,
-                                        title: 'Experience',
-                                        onTap: () {
-                                          scrollToIndex(2);
-                                        },
-                                      ),
-                                      NavigationTab(
-                                        icon: Icons.work,
-                                        title: 'Project',
-                                        onTap: () {
-                                          scrollToIndex(3);
-                                        },
-                                      ),
-                                      NavigationTab(
-                                        icon: Icons.star,
-                                        title: 'Interested',
-                                        onTap: () {
-                                          scrollToIndex(4);
-                                        },
-                                      ),
-                                      NavigationTab(
-                                        icon: Icons.contacts,
-                                        title: 'Contact',
-                                        onTap: () {
-                                          scrollToIndex(5);
-                                        },
-                                      ),
-                                      const SizedBox(
-                                        height: 20,
-                                      ),
-                                      Wrap(
-                                        spacing: 6,
+                                child: Column(
+                                  children: [
+                                    LeftContainerSection(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: [
-                                          SocIcon(
+                                          NavigationTab(
+                                            icon: Icons.home,
+                                            title: 'Home',
                                             onTap: () {
-                                              js.context.callMethod(
-                                                  'open', [Data.FACEBOOK_URL]);
+                                              scrollToIndex(0);
                                             },
-                                            icon: FontAwesomeIcons.facebookF,
                                           ),
-                                          // SocIcon(
-                                          //   onTap: () {},
-                                          //   icon: FontAwesomeIcons.twitter,
-                                          // ),
-                                          SocIcon(
+                                          NavigationTab(
+                                            icon: Icons.account_box,
+                                            title: 'About',
                                             onTap: () {
-                                              js.context.callMethod(
-                                                  'open', [Data.LINKEDIN_URL]);
+                                              scrollToIndex(1);
                                             },
-                                            icon: FontAwesomeIcons.linkedin,
                                           ),
-                                          const SocIcon(
-                                            onTap: null,
-                                            //  () {
-                                            //   js.context.callMethod('open',
-                                            //       [Data.PORTFOLIO_URL]);
-                                            // }
-                                            icon: FontAwesomeIcons.globe,
+                                          NavigationTab(
+                                            icon: Icons.book,
+                                            title: 'Experience',
+                                            onTap: () {
+                                              scrollToIndex(2);
+                                            },
+                                          ),
+                                          NavigationTab(
+                                            icon: Icons.work,
+                                            title: 'Project',
+                                            onTap: () {
+                                              scrollToIndex(3);
+                                            },
+                                          ),
+                                          NavigationTab(
+                                            icon: Icons.star,
+                                            title: 'Interested',
+                                            onTap: () {
+                                              scrollToIndex(4);
+                                            },
+                                          ),
+                                          NavigationTab(
+                                            icon: Icons.contacts,
+                                            title: 'Contact',
+                                            onTap: () {
+                                              scrollToIndex(5);
+                                            },
+                                          ),
+                                          const SizedBox(
+                                            height: 20,
+                                          ),
+                                          Wrap(
+                                            spacing: 6,
+                                            children: [
+                                              SocIcon(
+                                                onTap: () {
+                                                  js.context.callMethod('open',
+                                                      [Data.FACEBOOK_URL]);
+                                                },
+                                                icon:
+                                                    FontAwesomeIcons.facebookF,
+                                              ),
+                                              // SocIcon(
+                                              //   onTap: () {},
+                                              //   icon: FontAwesomeIcons.twitter,
+                                              // ),
+                                              SocIcon(
+                                                onTap: () {
+                                                  js.context.callMethod('open',
+                                                      [Data.LINKEDIN_URL]);
+                                                },
+                                                icon: FontAwesomeIcons.linkedin,
+                                              ),
+                                              const SocIcon(
+                                                onTap: null,
+                                                //  () {
+                                                //   js.context.callMethod('open',
+                                                //       [Data.PORTFOLIO_URL]);
+                                                // }
+                                                icon: FontAwesomeIcons.globe,
+                                              ),
+                                            ],
                                           ),
                                         ],
-                                      )
-                                    ],
-                                  ),
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      height: 120,
+                                      width: 120,
+                                      child: RiveAnimation.asset(
+                                        'assets/animations/falling_charac.riv',
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
                               const SizedBox(

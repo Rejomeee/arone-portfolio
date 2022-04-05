@@ -236,5 +236,5 @@ class Data {
   static const MESSAGE_API =
       "https://us-central1-workout-e1b53.cloudfunctions.net/api/message";
 
-  static const CV_URL = "https://usaupload.com/6e9D/Arone_Jerome_Resume.pdf";
+  static const CV_URL = "https://bit.ly/aronemalicseresume";
 }
