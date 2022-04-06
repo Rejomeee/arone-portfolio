@@ -18,7 +18,7 @@ Future sendEmail(
         'template_params': {
           'from_name': name,
           'from_email': email,
-          'subject': email,
+          'subject': subject,
           'message': message
         }
       }));
