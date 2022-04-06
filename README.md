@@ -43,3 +43,7 @@ git push -u origin main --force
 
 <!-- open your repo and follow the steps -->
 Settings > GitHub Pages > Main > /(root) > Save
+
+
+<!-- Github Actions -->
+https://igorsteblii.medium.com/deploy-flutter-web-app-with-github-actions-or-gitlab-ci-cd-on-pages-in-5-min-6a473ac79101
