@@ -21241,7 +21241,7 @@ while(true)switch(s){case 0:p=P.uI("https://api.emailjs.com/api/v1.0/email/send"
 o=t.N
 n=P.aH(["Content-Type","application/json"],o,o)
 s=3
-return P.ah(G.aIj(p,C.b_.jo(P.aH(["service_id","service_a324stt","template_id","template_ryyzmpb","user_id","RCB0a_MPbJTGYW9U_","template_params",P.aH(["from_name",a,"from_email",b,"subject",b,"message",c],o,o)],o,t.K)),n),$async$aiW)
+return P.ah(G.aIj(p,C.b_.jo(P.aH(["service_id","service_a324stt","template_id","template_ryyzmpb","user_id","RCB0a_MPbJTGYW9U_","template_params",P.aH(["from_name",a,"from_email",b,"subject",d,"message",c],o,o)],o,t.K)),n),$async$aiW)
 case 3:q=f
 s=1
 break
@@ -66387,7 +66387,7 @@ case 7:case 3:return P.a7(null,r)
 case 1:return P.a6(p,r)}})
 return P.a8($async$kT,r)},
 V(a,b){var s=null,r=t.p
-return new A.KS(T.eU(H.a([C.bb,L.c7(this.a.c,s,s,s,C.cU,s,s),M.cP(s,s,C.p,s,s,C.d8,s,8,C.b3,s,s,s,40),C.bK,T.fY(H.a([T.eU(H.a([L.c7("Contact No.",s,s,s,C.ay.wL(C.D),s,s),C.iB,T.mz(D.ku(s,L.c7("09924207735",s,s,s,C.e_.Pp(C.kC,C.D),s,s),C.ag,!1,s,s,s,s,s,s,s,s,s,s,s,s,new M.adw(),s,s,s,s,s,s),C.cP,s,s,s,!0),C.aV,L.c7("Email",s,s,s,C.ay.wL(C.D),s,s),C.iB,T.mz(D.ku(s,L.c7("arone.malicse.os@gmail.com",s,s,s,C.e_.Pp(C.kC,C.D),s,s),C.ag,!1,s,s,s,s,s,s,s,s,s,s,s,s,new M.adx(),s,s,s,s,s,s),C.cP,s,s,s,!0)],r),C.a0,C.P),C.Kf,T.apg(T.eU(H.a([E.a5y("name",1,C.an,"Your name",new M.ady(),!0),C.aV,E.a5y("email",1,C.an,"Your Email",new M.adz(),!0),C.aV,E.a5y("subject",1,C.an,"Subject",new M.adA(),!0),C.aV,E.a5y("message",4,C.an,"Message",new M.adB(),!0),C.bK,this.act()],r),C.av,C.P))],r),C.a0,C.b5,C.P)],r),C.a0,C.P),this.d,s)}}
+return new A.KS(T.eU(H.a([C.bb,L.c7(this.a.c,s,s,s,C.cU,s,s),M.cP(s,s,C.p,s,s,C.d8,s,8,C.b3,s,s,s,40),C.bK,T.fY(H.a([T.eU(H.a([L.c7("Contact No.",s,s,s,C.ay.wL(C.D),s,s),C.iB,T.mz(D.ku(s,L.c7("09924207735",s,s,s,C.e_.Pp(C.kC,C.D),s,s),C.ag,!1,s,s,s,s,s,s,s,s,s,s,s,s,new M.adw(),s,s,s,s,s,s),C.cP,s,s,s,!0),C.aV,L.c7("Email",s,s,s,C.ay.wL(C.D),s,s),C.iB,T.mz(D.ku(s,L.c7("arone.portfolio@gmail.com",s,s,s,C.e_.Pp(C.kC,C.D),s,s),C.ag,!1,s,s,s,s,s,s,s,s,s,s,s,s,new M.adx(),s,s,s,s,s,s),C.cP,s,s,s,!0)],r),C.a0,C.P),C.Kf,T.apg(T.eU(H.a([E.a5y("name",1,C.an,"Your name",new M.ady(),!0),C.aV,E.a5y("email",1,C.an,"Your Email",new M.adz(),!0),C.aV,E.a5y("subject",1,C.an,"Subject",new M.adA(),!0),C.aV,E.a5y("message",4,C.an,"Message",new M.adB(),!0),C.bK,this.act()],r),C.av,C.P))],r),C.a0,C.b5,C.P)],r),C.a0,C.P),this.d,s)}}
 M.adC.prototype={
 $0(){this.a.e=this.b},
 $S:0}
@@ -66409,7 +66409,7 @@ M.adw.prototype={
 $0(){$.hR().ix("open",["tel:09924207735"])},
 $S:0}
 M.adx.prototype={
-$0(){$.hR().ix("open",["mailto:arone.malicse.os@gmail.com"])},
+$0(){$.hR().ix("open",["mailto:arone.portfolio@gmail.com"])},
 $S:0}
 M.ady.prototype={
 $1(a){var s="maxLength",r=t.N,q=H.ke(a.r,r,t.K)
