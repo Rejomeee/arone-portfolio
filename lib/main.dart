@@ -88,7 +88,6 @@ class _MyHomePageState extends State<MyHomePage> {
                             fit: BoxFit.fill,
                           ),
                           ListView(
-                            padding: const EdgeInsets.only(top: 20),
                             shrinkWrap: true,
                             children: [
                               Row(
@@ -163,146 +162,117 @@ class _MyHomePageState extends State<MyHomePage> {
                               )
                             ],
                           ),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 20),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                Flexible(
-                                  flex: 4,
-                                  child: Column(
-                                    children: [
-                                      LeftContainerSection(
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            NavigationTab(
-                                              icon: Icons.home,
-                                              title: 'Home',
-                                              onTap: () {
-                                                scrollToIndex(0);
-                                              },
-                                            ),
-                                            NavigationTab(
-                                              icon: Icons.account_box,
-                                              title: 'About',
-                                              onTap: () {
-                                                scrollToIndex(1);
-                                              },
-                                            ),
-                                            NavigationTab(
-                                              icon: Icons.book,
-                                              title: 'Experience',
-                                              onTap: () {
-                                                scrollToIndex(2);
-                                              },
-                                            ),
-                                            NavigationTab(
-                                              icon: Icons.work,
-                                              title: 'Project',
-                                              onTap: () {
-                                                scrollToIndex(3);
-                                              },
-                                            ),
-                                            NavigationTab(
-                                              icon: Icons.star,
-                                              title: 'Interested',
-                                              onTap: () {
-                                                scrollToIndex(4);
-                                              },
-                                            ),
-                                            NavigationTab(
-                                              icon: Icons.contacts,
-                                              title: 'Contact',
-                                              onTap: () {
-                                                scrollToIndex(5);
-                                              },
-                                            ),
-                                            const SizedBox(
-                                              height: 20,
-                                            ),
-                                            Wrap(
-                                              spacing: 6,
-                                              children: [
-                                                SocIcon(
-                                                  onTap: () {
-                                                    js.context.callMethod(
-                                                        'open',
-                                                        [Data.FACEBOOK_URL]);
-                                                  },
-                                                  icon: FontAwesomeIcons
-                                                      .facebookF,
-                                                ),
-                                                // SocIcon(
-                                                //   onTap: () {},
-                                                //   icon: FontAwesomeIcons.twitter,
-                                                // ),
-                                                SocIcon(
-                                                  onTap: () {
-                                                    js.context.callMethod(
-                                                        'open',
-                                                        [Data.LINKEDIN_URL]);
-                                                  },
-                                                  icon:
-                                                      FontAwesomeIcons.linkedin,
-                                                ),
-                                                const SocIcon(
-                                                  onTap: null,
-                                                  //     () {
-                                                  //   js.context.callMethod('open',
-                                                  //       [Data.PORTFOLIO_URL]);
-                                                  // },
-                                                  icon: FontAwesomeIcons.globe,
-                                                ),
-                                              ],
-                                            ),
-                                          ],
-                                        ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              Flexible(
+                                flex: 4,
+                                child: Column(
+                                  children: [
+                                    LeftContainerSection(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          NavigationTab(
+                                            icon: Icons.home,
+                                            title: 'Home',
+                                            onTap: () {
+                                              scrollToIndex(0);
+                                            },
+                                          ),
+                                          NavigationTab(
+                                            icon: Icons.account_box,
+                                            title: 'About',
+                                            onTap: () {
+                                              scrollToIndex(1);
+                                            },
+                                          ),
+                                          NavigationTab(
+                                            icon: Icons.book,
+                                            title: 'Experience',
+                                            onTap: () {
+                                              scrollToIndex(2);
+                                            },
+                                          ),
+                                          NavigationTab(
+                                            icon: Icons.work,
+                                            title: 'Project',
+                                            onTap: () {
+                                              scrollToIndex(3);
+                                            },
+                                          ),
+                                          NavigationTab(
+                                            icon: Icons.star,
+                                            title: 'Interested',
+                                            onTap: () {
+                                              scrollToIndex(4);
+                                            },
+                                          ),
+                                          NavigationTab(
+                                            icon: Icons.contacts,
+                                            title: 'Contact',
+                                            onTap: () {
+                                              scrollToIndex(5);
+                                            },
+                                          ),
+                                          const SizedBox(
+                                            height: 20,
+                                          ),
+                                          Wrap(
+                                            spacing: 6,
+                                            children: [
+                                              SocIcon(
+                                                onTap: () {
+                                                  js.context.callMethod('open',
+                                                      [Data.FACEBOOK_URL]);
+                                                },
+                                                icon:
+                                                    FontAwesomeIcons.facebookF,
+                                              ),
+                                              // SocIcon(
+                                              //   onTap: () {},
+                                              //   icon: FontAwesomeIcons.twitter,
+                                              // ),
+                                              SocIcon(
+                                                onTap: () {
+                                                  js.context.callMethod('open',
+                                                      [Data.LINKEDIN_URL]);
+                                                },
+                                                icon: FontAwesomeIcons.linkedin,
+                                              ),
+                                              const SocIcon(
+                                                onTap: null,
+                                                //     () {
+                                                //   js.context.callMethod('open',
+                                                //       [Data.PORTFOLIO_URL]);
+                                                // },
+                                                icon: FontAwesomeIcons.globe,
+                                              ),
+                                            ],
+                                          ),
+                                        ],
                                       ),
-                                      const SizedBox(
-                                        height: 120,
-                                        width: 120,
-                                        child: RiveAnimation.asset(
-                                          'assets/animations/falling_charac.riv',
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                const SizedBox(
-                                  width: 35,
-                                ),
-                                const Expanded(
-                                  flex: 8,
-                                  child: SizedBox(),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Container(
-                              width: double.infinity,
-                              decoration:
-                                  const BoxDecoration(color: Colors.yellow),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  const Text('Please redirect to '),
-                                  GestureDetector(
-                                    onTap: () {
-                                      js.context.callMethod('open', [
-                                        'https://rejomeee.github.io/aronejerome.github.io/',
-                                        "_self"
-                                      ]);
-                                    },
-                                    child: const Text(
-                                      'https://rejomeee.github.io/aronejerome.github.io/',
-                                      style: TextStyle(color: kColorBlue),
                                     ),
-                                  ),
-                                  const Text('. this page will close soon.'),
-                                ],
-                              )),
+                                    const SizedBox(
+                                      height: 120,
+                                      width: 120,
+                                      child: RiveAnimation.asset(
+                                        'assets/animations/falling_charac.riv',
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              const SizedBox(
+                                width: 35,
+                              ),
+                              const Expanded(
+                                flex: 8,
+                                child: SizedBox(),
+                              ),
+                            ],
+                          ),
                         ],
                       ),
                     ),
