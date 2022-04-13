@@ -3,21 +3,21 @@ const MANIFEST = 'flutter-app-manifest';
 const TEMP = 'flutter-temp-cache';
 const CACHE_NAME = 'flutter-app-cache';
 const RESOURCES = {
-  "assets/NOTICES": "7768e899e59e87beebdb3dfc77ad8a7d",
-"assets/assets/images/ako.jpg": "efaef04922cef3c4a9669037f8ba1af9",
-"assets/assets/animations/clouds_bg.riv": "5ab3cc51c57034463bef8ef3f3ae2a5d",
-"assets/assets/animations/falling_charac.riv": "92be041ae0c417468a30ed9429e6b915",
-"assets/assets/animations/flutter_bird.riv": "3a155bda8bd8e20990ad076868e106af",
-"assets/FontManifest.json": "5a32d4310a6f5d9a6b651e75ba0d7372",
-"assets/AssetManifest.json": "c2108e83b0f7e10394032d69dda9bb9b",
-"assets/packages/font_awesome_flutter/lib/fonts/fa-solid-900.ttf": "dd3c4233029270506ecc994d67785a37",
-"assets/packages/font_awesome_flutter/lib/fonts/fa-regular-400.ttf": "613e4cc1af0eb5148b8ce409ad35446d",
-"assets/packages/font_awesome_flutter/lib/fonts/fa-brands-400.ttf": "d1722d5cf2c7855862f68edb85e31f88",
-"assets/packages/cupertino_icons/assets/CupertinoIcons.ttf": "6d342eb68f170c97609e9da345464e5e",
-"assets/fonts/MaterialIcons-Regular.otf": "4e6447691c9509f7acdbf8a931a85ca1",
+  "main.dart.js": "0a68475a758b0e8f37b1841b4716cbfb",
 "index.html": "5ef0f43ef277c864a303ca04f5520194",
 "/": "5ef0f43ef277c864a303ca04f5520194",
-"main.dart.js": "5a64d1b01eaa92dd9b9638f9222d6e3e",
+"assets/fonts/MaterialIcons-Regular.otf": "4e6447691c9509f7acdbf8a931a85ca1",
+"assets/AssetManifest.json": "c2108e83b0f7e10394032d69dda9bb9b",
+"assets/packages/font_awesome_flutter/lib/fonts/fa-solid-900.ttf": "dd3c4233029270506ecc994d67785a37",
+"assets/packages/font_awesome_flutter/lib/fonts/fa-brands-400.ttf": "d1722d5cf2c7855862f68edb85e31f88",
+"assets/packages/font_awesome_flutter/lib/fonts/fa-regular-400.ttf": "613e4cc1af0eb5148b8ce409ad35446d",
+"assets/packages/cupertino_icons/assets/CupertinoIcons.ttf": "6d342eb68f170c97609e9da345464e5e",
+"assets/FontManifest.json": "5a32d4310a6f5d9a6b651e75ba0d7372",
+"assets/assets/images/ako.jpg": "efaef04922cef3c4a9669037f8ba1af9",
+"assets/assets/animations/falling_charac.riv": "92be041ae0c417468a30ed9429e6b915",
+"assets/assets/animations/flutter_bird.riv": "3a155bda8bd8e20990ad076868e106af",
+"assets/assets/animations/clouds_bg.riv": "5ab3cc51c57034463bef8ef3f3ae2a5d",
+"assets/NOTICES": "7768e899e59e87beebdb3dfc77ad8a7d",
 "version.json": "763e992bb62d41ae38b1b2c065b0d8b4"
 };
 
