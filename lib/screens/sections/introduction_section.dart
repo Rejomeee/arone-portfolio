@@ -10,7 +10,8 @@ import 'package:flutter/services.dart';
 import 'dart:js' as js;
 
 class IntroductionSection extends StatefulWidget {
-  const IntroductionSection({Key? key}) : super(key: key);
+  const IntroductionSection({Key? key, this.constraints}) : super(key: key);
+  final BoxConstraints? constraints;
 
   @override
   State<IntroductionSection> createState() => _IntroductionSectionState();
@@ -67,7 +68,7 @@ class _IntroductionSectionState extends State<IntroductionSection> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
+          Wrap(
             children: [
               Text(
                 "Hi! I'm Arone ",

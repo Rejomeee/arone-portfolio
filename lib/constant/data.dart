@@ -2,7 +2,7 @@ class Data {
   static const WEB_TITLE = "Arone Jerome - Mobile Developer";
   static const NAME = "Arone Jerome Malicse";
   static const ROLE = "Flutter Mobile Developer";
-  static const PHONE_NUMBER = "09924207735";
+  static const PHONE_NUMBER = "09924207736";
   static const EMAIL = "arone.portfolio@gmail.com";
   static const LOCATION = "General Trias, Cavite";
   static const BIRTHDAY = "12 September, 1997";
