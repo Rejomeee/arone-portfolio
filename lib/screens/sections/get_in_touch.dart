@@ -1,17 +1,15 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_my_portfolio/components/reactive_input_field.dart';
-import 'package:flutter_my_portfolio/constant/data.dart';
-import 'package:flutter_my_portfolio/constant/style.dart';
-import 'dart:js' as js;
-
-import 'package:flutter_my_portfolio/services/send_email.dart';
-import 'package:http/http.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 
+import '../../components/reactive_input_field.dart';
+import '../../constant/data.dart';
+import '../../constant/style.dart';
+import '../../services/send_email.dart';
+import '../../utils/open_link.dart';
+import '../../widgets/section_header.dart';
+
 class GetInTouchSection extends StatefulWidget {
-  final String? title;
-  const GetInTouchSection({Key? key, this.title}) : super(key: key);
+  const GetInTouchSection({super.key});
 
   @override
   State<GetInTouchSection> createState() => _GetInTouchSectionState();
@@ -19,143 +17,83 @@ class GetInTouchSection extends StatefulWidget {
 
 class _GetInTouchSectionState extends State<GetInTouchSection> {
   final contactForm = FormGroup({
-    'email': FormControl(
+    'name': FormControl<String>(
+      value: '',
+      validators: [Validators.required],
+    ),
+    'email': FormControl<String>(
       value: '',
       validators: [
         Validators.required,
         Validators.email,
-        Validators.maxLength(62)
-      ],
-      asyncValidatorsDebounceTime: 800,
-    ),
-    'name': FormControl(
-      value: '',
-      validators: [
-        Validators.required,
+        Validators.maxLength(62),
       ],
     ),
-    'message': FormControl(
+    'subject': FormControl<String>(
       value: '',
-      validators: [
-        Validators.required,
-        // Validators.minLength(6),
-      ],
+      validators: [Validators.required],
     ),
-    'subject': FormControl(
+    'message': FormControl<String>(
       value: '',
-      validators: [
-        Validators.required,
-      ],
+      validators: [Validators.required],
     ),
   });
 
-  bool isSubmitting = false;
+  bool _isSubmitting = false;
 
   @override
   void dispose() {
+    contactForm.dispose();
     super.dispose();
   }
 
-  void toggleIsSubmitting(bool value) {
-    setState(() {
-      this.isSubmitting = value;
-    });
-  }
-
-  Widget buildTextFormField(
-    String hint,
-    TextEditingController controller, {
-    int maxLines = 1,
-    bool isEmail = false,
-  }) {
-    return TextFormField(
-      controller: controller,
-      maxLines: maxLines,
-      decoration: InputDecoration(
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(18),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: kButtonColor, width: 1.0),
-          borderRadius: BorderRadius.circular(18),
-        ),
-        hintText: hint,
-        contentPadding: EdgeInsets.symmetric(
-          horizontal: 24,
-          vertical: maxLines == 1 ? 0 : 12,
-        ),
-      ),
-      style: TextStyle(fontSize: 14),
-      cursorColor: kButtonColor,
-      validator: (value) {
-        if (value!.trim().isEmpty) {
-          return 'The field is required';
-        } else if (isEmail &&
-            !RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-                .hasMatch(value)) {
-          return "Invalid email";
-        }
-        return null;
+  Map<String, ValidationMessageFunction> _messages({bool email = false}) {
+    return {
+      ValidationMessage.required: (_) => 'This field is required',
+      if (email) ValidationMessage.email: (_) => 'Enter a valid email',
+      ValidationMessage.maxLength: (error) {
+        final requiredLength = error is Map ? error['requiredLength'] : null;
+        return 'Use fewer than $requiredLength characters';
       },
-    );
+    };
   }
 
-  Widget buildSubmitButton() {
-    return ReactiveFormConsumer(builder: (context, form, child) {
-      bool invalid = form.invalid;
-      return MaterialButton(
-        padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-        onPressed: invalid ? () {} : submit,
-        color: invalid || isSubmitting ? Colors.grey : kButtonColor,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(32),
-        ),
-        child: Text(
-          this.isSubmitting ? "Submitting..." : "Submit Message",
-          style: TextStyle(color: Colors.white),
-        ),
+  String _value(String name) => '${contactForm.control(name).value ?? ''}';
+
+  Future<void> _submit() async {
+    if (_isSubmitting || contactForm.invalid) return;
+    setState(() => _isSubmitting = true);
+    try {
+      final response = await sendEmail(
+        _value('name'),
+        _value('email'),
+        _value('message'),
+        _value('subject'),
       );
-    });
+      if (!mounted) return;
+      final sent = response.statusCode == 200;
+      _showResult(
+        sent
+            ? "Thanks for your message. I'll take a look."
+            : 'Something went wrong. Please try again.',
+        sent,
+      );
+      if (sent) contactForm.reset();
+    } catch (_) {
+      if (!mounted) return;
+      _showResult('Something went wrong. Please try again.', false);
+    } finally {
+      if (mounted) setState(() => _isSubmitting = false);
+    }
   }
 
-  void submit() async {
-    if (!isSubmitting) {
-      try {
-        toggleIsSubmitting(true);
-        Response response = await sendEmail(
-          contactForm.control('name').value,
-          contactForm.control('email').value,
-          contactForm.control('message').value,
-          contactForm.control('subject').value,
-        );
-        final statusCode = response.statusCode;
-        if (statusCode == 200) {
-          Scaffold.of(context).showSnackBar(
-            const SnackBar(
-              content: Text("Thanks for your message. Will check on that. :D"),
-              backgroundColor: Colors.green,
-            ),
-          );
-          contactForm.reset();
-        } else {
-          Scaffold.of(context).showSnackBar(
-            const SnackBar(
-              content: Text("Something went wrong."),
-              backgroundColor: Colors.red,
-            ),
-          );
-        }
-        toggleIsSubmitting(false);
-      } on Exception catch (e) {
-        Scaffold.of(context).showSnackBar(
-          const SnackBar(
-            content: Text("Something went wrong."),
-            backgroundColor: Colors.red,
-          ),
-        );
-        toggleIsSubmitting(false);
-      }
-    }
+  void _showResult(String message, bool success) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        backgroundColor: success ? const Color(0xFF1AA742) : kColorRed,
+      ),
+    );
   }
 
   @override
@@ -165,342 +103,154 @@ class _GetInTouchSectionState extends State<GetInTouchSection> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const SizedBox(
-            height: 20,
+          const SectionHeader(title: 'Get in touch'),
+          const SizedBox(height: 18),
+          LayoutBuilder(
+            builder: (context, constraints) {
+              final wide = constraints.maxWidth >= 640;
+              final details = const _ContactDetails();
+              final form = _MessageForm(
+                messages: _messages,
+                isSubmitting: _isSubmitting,
+                onSubmit: _submit,
+              );
+              if (!wide) {
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    details,
+                    const SizedBox(height: 20),
+                    form,
+                  ],
+                );
+              }
+              return Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  details,
+                  const SizedBox(width: 28),
+                  Expanded(child: form),
+                ],
+              );
+            },
           ),
-          Text('${widget.title}', style: kHeadline3),
-          Container(
-            height: 8,
-            width: 40,
-            margin: const EdgeInsets.only(top: 10),
-            decoration: const BoxDecoration(color: kColorLavender),
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          LayoutBuilder(builder: (_, constrain) {
-            final maxWidth = constrain.maxWidth;
-            const widthForTablet = 500;
-            return maxWidth >= widthForTablet
-                ? buildTabletLayout()
-                : buildPhoneLayout();
-          }),
         ],
       ),
     );
   }
+}
 
-  buildPhoneLayout() {
+class _ContactDetails extends StatelessWidget {
+  const _ContactDetails();
+
+  @override
+  Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          'Contact No.',
-          style: kTextSub.copyWith(
-            fontWeight: FontWeight.w400,
-          ),
+        _ContactLink(
+          label: 'Phone',
+          value: Data.phoneNumber,
+          url: 'tel:${Data.phoneNumber}',
         ),
-        const SizedBox(
-          height: 5,
+        const SizedBox(height: 16),
+        _ContactLink(
+          label: 'Email',
+          value: Data.email,
+          url: 'mailto:${Data.email}',
         ),
-        MouseRegion(
-          cursor: SystemMouseCursors.click,
-          child: GestureDetector(
-            onTap: () {
-              // mailto:support@email.com?
-              js.context.callMethod('open', ['tel:${Data.PHONE_NUMBER}']);
-            },
-            child: Text(
-              Data.PHONE_NUMBER,
-              style: kTextBody.copyWith(
-                  fontWeight: FontWeight.w400, color: kColorBlue),
-            ),
-          ),
-        ),
-        const SizedBox(
-          height: 15,
-        ),
-        Text(
-          'Email',
-          style: kTextSub.copyWith(
-            fontWeight: FontWeight.w400,
-          ),
-        ),
-        const SizedBox(
-          height: 5,
-        ),
-        MouseRegion(
-          cursor: SystemMouseCursors.click,
-          child: GestureDetector(
-            onTap: () {
-              // mailto:support@email.com?
-              js.context.callMethod('open', ['mailto:${Data.EMAIL}']);
-            },
-            child: Text(
-              Data.EMAIL,
-              style: kTextBody.copyWith(
-                fontWeight: FontWeight.w400,
-                color: kColorBlue,
-              ),
-            ),
-          ),
-        ),
-        const SizedBox(
-          height: 15,
-        ),
-        ReactiveInputField(
-          padding: EdgeInsets.zero,
-          formControlName: 'name',
-          validationMessages: (control) {
-            Map errors = control.errors;
-            int maxlength = 0;
-            if (errors['maxLength'] != null) {
-              maxlength = errors['maxLength']['requiredLength'];
-            }
-
-            return {
-              'required': 'This field is required',
-              'maxLength':
-                  'This field must have less than $maxlength characters'
-            };
-          },
-          withBorder: true,
-          title: 'Your name',
-        ),
-        const SizedBox(
-          height: 15,
-        ),
-        ReactiveInputField(
-          padding: EdgeInsets.zero,
-          formControlName: 'email',
-          validationMessages: (control) {
-            Map errors = control.errors;
-            int maxlength = 0;
-            if (errors['maxLength'] != null) {
-              maxlength = errors['maxLength']['requiredLength'];
-            }
-
-            return {
-              'required': 'This field is required',
-              'email': 'Invalid format.',
-              'maxLength':
-                  'This field must have less than $maxlength characters'
-            };
-          },
-          withBorder: true,
-          title: 'Your Email',
-        ),
-        const SizedBox(
-          height: 15,
-        ),
-        ReactiveInputField(
-          padding: EdgeInsets.zero,
-          formControlName: 'subject',
-          validationMessages: (control) {
-            Map errors = control.errors;
-            int maxlength = 0;
-            if (errors['maxLength'] != null) {
-              maxlength = errors['maxLength']['requiredLength'];
-            }
-
-            return {
-              'required': 'This field is required',
-              'maxLength':
-                  'This field must have less than $maxlength characters'
-            };
-          },
-          withBorder: true,
-          title: 'Subject',
-        ),
-        const SizedBox(
-          height: 15,
-        ),
-        ReactiveInputField(
-          padding: EdgeInsets.zero,
-          formControlName: 'message',
-          validationMessages: (control) {
-            Map errors = control.errors;
-            int maxlength = 0;
-            if (errors['maxLength'] != null) {
-              maxlength = errors['maxLength']['requiredLength'];
-            }
-
-            return {
-              'required': 'This field is required',
-              'maxLength':
-                  'This field must have less than $maxlength characters'
-            };
-          },
-          withBorder: true,
-          title: 'Message',
-          maxLines: 4,
-        ),
-        const SizedBox(
-          height: 10,
-        ),
-        SizedBox(width: 500, child: buildSubmitButton())
+        const SizedBox(height: 16),
+        Text('Location', style: kTextCaption),
+        const SizedBox(height: 4),
+        const Text(Data.location, style: kTextSub),
       ],
     );
   }
+}
 
-  buildTabletLayout() {
-    return Row(
+class _ContactLink extends StatelessWidget {
+  const _ContactLink({
+    required this.label,
+    required this.value,
+    required this.url,
+  });
+
+  final String label;
+  final String value;
+  final String url;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Contact No.',
-              style: kTextSub.copyWith(
-                fontWeight: FontWeight.w400,
-              ),
+        Text(label, style: kTextCaption),
+        const SizedBox(height: 4),
+        MouseRegion(
+          cursor: SystemMouseCursors.click,
+          child: GestureDetector(
+            onTap: () => openLink(url),
+            child: Text(
+              value,
+              style: kTextSub2.copyWith(color: kColorBlue),
             ),
-            const SizedBox(
-              height: 5,
-            ),
-            MouseRegion(
-              cursor: SystemMouseCursors.click,
-              child: GestureDetector(
-                onTap: () {
-                  // mailto:support@email.com?
-                  js.context.callMethod('open', ['tel:${Data.PHONE_NUMBER}']);
-                },
-                child: Text(
-                  Data.PHONE_NUMBER,
-                  style: kTextBody.copyWith(
-                      fontWeight: FontWeight.w400, color: kColorBlue),
-                ),
-              ),
-            ),
-            const SizedBox(
-              height: 15,
-            ),
-            Text(
-              'Email',
-              style: kTextSub.copyWith(
-                fontWeight: FontWeight.w400,
-              ),
-            ),
-            const SizedBox(
-              height: 5,
-            ),
-            MouseRegion(
-              cursor: SystemMouseCursors.click,
-              child: GestureDetector(
-                onTap: () {
-                  // mailto:support@email.com?
-                  js.context.callMethod('open', ['mailto:${Data.EMAIL}']);
-                },
-                child: Text(
-                  Data.EMAIL,
-                  style: kTextBody.copyWith(
-                    fontWeight: FontWeight.w400,
-                    color: kColorBlue,
-                  ),
-                ),
-              ),
-            ),
-          ],
+          ),
         ),
-        const SizedBox(
-          width: 25,
+      ],
+    );
+  }
+}
+
+class _MessageForm extends StatelessWidget {
+  const _MessageForm({
+    required this.messages,
+    required this.isSubmitting,
+    required this.onSubmit,
+  });
+
+  final Map<String, ValidationMessageFunction> Function({bool email}) messages;
+  final bool isSubmitting;
+  final VoidCallback onSubmit;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        ReactiveInputField(
+          formControlName: 'name',
+          title: 'Your name',
+          validationMessages: messages(),
         ),
-        Expanded(
-          child: Column(
-            children: [
-              ReactiveInputField(
-                padding: EdgeInsets.zero,
-                formControlName: 'name',
-                validationMessages: (control) {
-                  Map errors = control.errors;
-                  int maxlength = 0;
-                  if (errors['maxLength'] != null) {
-                    maxlength = errors['maxLength']['requiredLength'];
-                  }
-
-                  return {
-                    'required': 'This field is required',
-                    'maxLength':
-                        'This field must have less than $maxlength characters'
-                  };
-                },
-                withBorder: true,
-                title: 'Your name',
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              ReactiveInputField(
-                padding: EdgeInsets.zero,
-                formControlName: 'email',
-                validationMessages: (control) {
-                  Map errors = control.errors;
-                  int maxlength = 0;
-                  if (errors['maxLength'] != null) {
-                    maxlength = errors['maxLength']['requiredLength'];
-                  }
-
-                  return {
-                    'required': 'This field is required',
-                    'email': 'Invalid format.',
-                    'maxLength':
-                        'This field must have less than $maxlength characters'
-                  };
-                },
-                withBorder: true,
-                title: 'Your Email',
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              ReactiveInputField(
-                padding: EdgeInsets.zero,
-                formControlName: 'subject',
-                validationMessages: (control) {
-                  Map errors = control.errors;
-                  int maxlength = 0;
-                  if (errors['maxLength'] != null) {
-                    maxlength = errors['maxLength']['requiredLength'];
-                  }
-
-                  return {
-                    'required': 'This field is required',
-                    'maxLength':
-                        'This field must have less than $maxlength characters'
-                  };
-                },
-                withBorder: true,
-                title: 'Subject',
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              ReactiveInputField(
-                padding: EdgeInsets.zero,
-                formControlName: 'message',
-                validationMessages: (control) {
-                  Map errors = control.errors;
-                  int maxlength = 0;
-                  if (errors['maxLength'] != null) {
-                    maxlength = errors['maxLength']['requiredLength'];
-                  }
-
-                  return {
-                    'required': 'This field is required',
-                    'maxLength':
-                        'This field must have less than $maxlength characters'
-                  };
-                },
-                withBorder: true,
-                title: 'Message',
-                maxLines: 4,
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              buildSubmitButton()
-            ],
+        const SizedBox(height: 14),
+        ReactiveInputField(
+          formControlName: 'email',
+          title: 'Your email',
+          validationMessages: messages(email: true),
+        ),
+        const SizedBox(height: 14),
+        ReactiveInputField(
+          formControlName: 'subject',
+          title: 'Subject',
+          validationMessages: messages(),
+        ),
+        const SizedBox(height: 14),
+        ReactiveInputField(
+          formControlName: 'message',
+          title: 'Message',
+          maxLines: 4,
+          validationMessages: messages(),
+        ),
+        const SizedBox(height: 16),
+        Align(
+          alignment: Alignment.centerLeft,
+          child: ReactiveFormConsumer(
+            builder: (context, form, child) {
+              final canSend = form.valid && !isSubmitting;
+              return FilledButton(
+                onPressed: canSend ? onSubmit : null,
+                child: Text(isSubmitting ? 'Sending...' : 'Send message'),
+              );
+            },
           ),
         ),
       ],

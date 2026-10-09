@@ -1,49 +1,20 @@
-# flutter_my_portfolio
+# Arone Jerome — Portfolio
 
-A new Flutter project.
+Flutter web portfolio for Arone Jerome Malicse. The app targets Flutter 3.41.9 (Dart 3.11).
 
-## Getting Started
+## Run locally
 
-This project is a starting point for a Flutter application.
+```bash
+flutter pub get
+flutter run -d chrome
+```
 
-A few resources to get you started if this is your first Flutter project:
+## Build for GitHub Pages
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+The live site is served from `https://rejomeee.github.io/arone-portfolio/`, so the build needs that base path:
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+```bash
+flutter build web --release --base-href /arone-portfolio/
+```
 
-
-new..
-git init
-git add README.md
-git commit -m "first commit"
-git branch -M main
-git remote add origin https://github.com/Rejomeee/my_portfolio.git
-git push -u origin main
-
-to build and deploy..
-
-<!-- run -->
-flutter build web --release
-
-<!-- goTo -->
-cd build/web/
-
-<!-- run -->
-git init
-git add .
-git commit -m "first commit"
-git branch -M main
-<!-- add origin your own github repo -->
-git remote add origin https://github.com/Rejomeee/aronejerome.github.io.git
-git push -u origin main --force
-
-<!-- open your repo and follow the steps -->
-Settings > GitHub Pages > Main > /(root) > Save
-
-
-<!-- Github Actions -->
-https://igorsteblii.medium.com/deploy-flutter-web-app-with-github-actions-or-gitlab-ci-cd-on-pages-in-5-min-6a473ac79101
+Pushes to `master` build and deploy through `.github/workflows/build-deploy.yml`.

@@ -1,144 +1,71 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter_my_portfolio/constant/data.dart';
-import 'package:flutter_my_portfolio/constant/style.dart';
+import 'package:flutter/material.dart';
+
+import '../../constant/data.dart';
+import '../../constant/style.dart';
+import '../../models/portfolio_models.dart';
+import '../../widgets/section_header.dart';
+import '../../widgets/tool_chips.dart';
 
 class ProjectSection extends StatelessWidget {
-  final String? title;
-  const ProjectSection({Key? key, this.title}) : super(key: key);
+  const ProjectSection({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const SizedBox(
-          height: 20,
-        ),
-        Text('$title', style: kHeadline3),
-        Container(
-          height: 8,
-          width: 40,
-          margin: const EdgeInsets.only(top: 10),
-          decoration: const BoxDecoration(color: kColorLavender),
-        ),
-        const SizedBox(
-          height: 10,
-        ),
-        ListView.builder(
-          physics: const NeverScrollableScrollPhysics(),
-          padding: const EdgeInsets.only(top: 10),
-          shrinkWrap: true,
-          itemCount: (Data.PROJECTS as dynamic).length,
-          itemBuilder: (context, index) => Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Flexible(
-                      flex: 3,
-                      child: Text(
-                        '${(Data.PROJECTS[index]['type'] as dynamic)}: ',
-                        style: kTextSub.copyWith(fontStyle: FontStyle.italic),
-                      ),
-                    ),
-                    Flexible(
-                      flex: 9,
-                      child: Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          '${(Data.PROJECTS[index]['description'] as dynamic)}',
-                          style:
-                              kTextSub2.copyWith(fontWeight: FontWeight.w800),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Flexible(
-                        flex: 3,
-                        child: Text(
-                          'Features: ',
-                          style: kTextSub.copyWith(fontStyle: FontStyle.italic),
-                        )),
-                    Flexible(
-                      flex: 9,
-                      child: ListView.builder(
-                        physics: const NeverScrollableScrollPhysics(),
-                        padding: const EdgeInsets.only(top: 10),
-                        shrinkWrap: true,
-                        itemCount: (Data.PROJECTS[index]['features'] as dynamic)
-                            .length,
-                        itemBuilder: (context, featureIndex) => Wrap(
-                          children: [
-                            Text(
-                                '- ${(Data.PROJECTS[index]['features'] as dynamic)[featureIndex]}',
-                                style: kTextSub2),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Flexible(
-                        flex: 3,
-                        child: Text('Tools: ',
-                            style: kTextSub.copyWith(
-                                fontStyle: FontStyle.italic))),
-                    Flexible(
-                      flex: 9,
-                      child: Align(
-                        alignment: Alignment.centerLeft,
-                        child: Wrap(
-                          spacing: 5,
-                          runSpacing: 5,
-                          children: ((Data.PROJECTS[index]['build_with']
-                                  as dynamic) as List<String>)
-                              .map((tool) => Container(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 12, vertical: 5),
-                                    decoration: const BoxDecoration(
-                                        shape: BoxShape.rectangle,
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(50)),
-                                        color: kBadgeColorGreen),
-                                    child: Text(
-                                      tool,
-                                      style: kTextSub2.copyWith(
-                                          color: kColorWhite),
-                                    ),
-                                  ))
-                              .toList(),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-        ),
-        const SizedBox(
-          height: 20,
-        ),
+        const SectionHeader(title: 'Projects'),
+        for (final project in Data.projects) _ProjectCard(project: project),
       ],
+    );
+  }
+}
+
+class _ProjectCard extends StatelessWidget {
+  const _ProjectCard({required this.project});
+
+  final PortfolioProject project;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      margin: const EdgeInsets.only(top: 16),
+      padding: const EdgeInsets.all(18),
+      decoration: BoxDecoration(
+        color: kCardTint,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: kCardBorder),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(project.title, style: kTextSub2.copyWith(color: kMainColor)),
+          const SizedBox(height: 8),
+          Text(
+            project.summary,
+            style: kTextBody.copyWith(color: kTextColorGrey),
+          ),
+          const SizedBox(height: 14),
+          const Text('Features', style: kTextCaption),
+          const SizedBox(height: 6),
+          for (final feature in project.features)
+            Padding(
+              padding: const EdgeInsets.only(bottom: 4),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text('•  ', style: kTextSub),
+                  Expanded(child: Text(feature, style: kTextSub)),
+                ],
+              ),
+            ),
+          const SizedBox(height: 12),
+          const Text('Built with', style: kTextCaption),
+          const SizedBox(height: 8),
+          ToolChips(tools: project.tools),
+        ],
+      ),
     );
   }
 }

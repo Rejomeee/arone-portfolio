@@ -1,44 +1,43 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter_my_portfolio/constant/data.dart';
-import 'package:flutter_my_portfolio/constant/style.dart';
+import 'package:flutter/material.dart';
+
+import '../../constant/data.dart';
+import '../../constant/style.dart';
+import '../../widgets/section_header.dart';
 
 class ExpandMySkillsSection extends StatelessWidget {
-  final String? title;
-  const ExpandMySkillsSection({Key? key, this.title}) : super(key: key);
+  const ExpandMySkillsSection({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const SizedBox(
-          height: 20,
-        ),
-        Text('$title', style: kHeadline3),
-        Container(
-          height: 8,
-          width: 40,
-          margin: const EdgeInsets.only(top: 10),
-          decoration: const BoxDecoration(color: kColorLavender),
-        ),
-        const SizedBox(
-          height: 10,
-        ),
-        const Text(
+        const SectionHeader(title: 'What I want to grow'),
+        const SizedBox(height: 16),
+        Text(
           "I'd like to expand my skills and knowledge in several fields:",
-          style: kTextBody,
+          style: kTextBody.copyWith(color: kTextColorGrey),
         ),
-        ListView.builder(
-          physics: const NeverScrollableScrollPhysics(),
-          padding: const EdgeInsets.only(top: 10),
-          shrinkWrap: true,
-          itemCount: (Data.EXPAND_SKILLS as dynamic).length,
-          itemBuilder: (context, index) => Wrap(
-            children: [
-              Text('- ${Data.EXPAND_SKILLS[index]}', style: kTextSub),
-            ],
-          ),
-        )
+        const SizedBox(height: 14),
+        Wrap(
+          spacing: 8,
+          runSpacing: 8,
+          children: [
+            for (final skill in Data.skillsToGrow)
+              Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 12,
+                  vertical: 8,
+                ),
+                decoration: BoxDecoration(
+                  color: kCardTint,
+                  borderRadius: BorderRadius.circular(20),
+                  border: Border.all(color: kCardBorder),
+                ),
+                child: Text(skill, style: kTextSub),
+              ),
+          ],
+        ),
       ],
     );
   }

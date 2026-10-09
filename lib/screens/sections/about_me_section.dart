@@ -1,70 +1,84 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter_my_portfolio/constant/data.dart';
-import 'package:flutter_my_portfolio/constant/style.dart';
-import 'dart:js' as js;
+import 'package:flutter/material.dart';
+
+import '../../constant/data.dart';
+import '../../constant/style.dart';
+import '../../utils/open_link.dart';
+import '../../widgets/section_header.dart';
 
 class AboutMeSection extends StatelessWidget {
-  final String? title;
-  const AboutMeSection({Key? key, this.title}) : super(key: key);
+  const AboutMeSection({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const SizedBox(
-          height: 20,
+        const SectionHeader(title: 'About me'),
+        const SizedBox(height: 18),
+        Text('Yo,', style: kHeadline2.copyWith(color: kMainColor)),
+        const SizedBox(height: 12),
+        for (final paragraph in Data.aboutMe) ...[
+          Text(paragraph, style: kTextBody.copyWith(color: kTextColorGrey)),
+          const SizedBox(height: 14),
+        ],
+        const SizedBox(height: 6),
+        Wrap(
+          spacing: 12,
+          runSpacing: 12,
+          children: [
+            for (final fact in Data.aboutFacts.entries)
+              _FactTile(label: fact.key, value: fact.value),
+          ],
         ),
-        Text('$title', style: kHeadline3),
-        Container(
-          height: 8,
-          width: 40,
-          margin: const EdgeInsets.only(top: 10),
-          decoration: const BoxDecoration(color: kColorLavender),
-        ),
-        const SizedBox(
-          height: 15,
-        ),
-        const Text(
-          'Yo,',
-          style: kHeadline2,
-        ),
-        const SizedBox(
-          height: 10,
-        ),
-        ListView.builder(
-          shrinkWrap: true,
-          itemCount: Data.ABOUT_ME.length,
-          itemBuilder: (context, index) => Padding(
-            padding: EdgeInsets.only(top: index == 0 ? 0 : 20.0),
-            child: Text(
-              Data.ABOUT_ME[index],
-              style: kTextSub.copyWith(color: kTextColorGrey),
-            ),
-          ),
-        ),
-        const SizedBox(
-          height: 25,
-        ),
-        const Text(
-          'Education',
-          style: kHeadline3,
-        ),
-        const SizedBox(
-          height: 10,
-        ),
-        const Text(
-          Data.ABOUT_EDUCATION_SCHOOL,
-          style: kTextSub2,
-        ),
-        const SizedBox(
-          height: 5,
-        ),
-        const Text(
-          Data.ABOUT_EDUCATION_SCHOOL_YEAR,
-          style: kTextSub,
-        ),
+        const SizedBox(height: 28),
+        const Text('Education', style: kHeadline3),
+        const SizedBox(height: 10),
+        const Text(Data.educationTitle, style: kTextSub2),
+        const SizedBox(height: 4),
+        const Text(Data.educationDetail, style: kTextSub),
       ],
+    );
+  }
+}
+
+class _FactTile extends StatelessWidget {
+  const _FactTile({required this.label, required this.value});
+
+  final String label;
+  final String value;
+
+  @override
+  Widget build(BuildContext context) {
+    final isEmail = label == 'Email';
+    final valueStyle = isEmail
+        ? kTextSub2.copyWith(color: kColorBlue)
+        : kTextSub2;
+
+    return Container(
+      constraints: const BoxConstraints(minWidth: 180),
+      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+      decoration: BoxDecoration(
+        color: kCardTint,
+        borderRadius: BorderRadius.circular(14),
+        border: Border.all(color: kCardBorder),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(label, style: kTextCaption),
+          const SizedBox(height: 4),
+          if (isEmail)
+            MouseRegion(
+              cursor: SystemMouseCursors.click,
+              child: GestureDetector(
+                onTap: () => openLink('mailto:$value'),
+                child: Text(value, style: valueStyle),
+              ),
+            )
+          else
+            Text(value, style: valueStyle),
+        ],
+      ),
     );
   }
 }

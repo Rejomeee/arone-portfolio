@@ -1,38 +1,33 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_my_portfolio/constant/style.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
+import '../constant/style.dart';
 
 class SocIcon extends StatelessWidget {
   const SocIcon({
-    Key? key,
-    this.onTap,
-    this.icon,
-    this.color,
-  }) : super(key: key);
+    super.key,
+    required this.icon,
+    required this.onTap,
+    this.tooltip,
+  });
 
-  final void Function()? onTap;
-  final IconData? icon;
-  final Color? color;
+  final FaIconData icon;
+  final VoidCallback onTap;
+  final String? tooltip;
 
   @override
   Widget build(BuildContext context) {
-    return MouseRegion(
-      cursor: onTap == null
-          ? SystemMouseCursors.forbidden
-          : SystemMouseCursors.click,
-      child: GestureDetector(
-        onTap: onTap,
-        child: Container(
-          padding: const EdgeInsets.all(5),
-          decoration: BoxDecoration(
-            borderRadius: const BorderRadius.all(
-              Radius.circular(25),
-            ),
-            color: onTap == null ? kTextColorLightGreyLines : kColorWhite,
-          ),
-          child: Icon(
-            icon,
-            size: 16.0,
-            color: onTap == null ? kTextColorGrey : color,
+    return Tooltip(
+      message: tooltip ?? '',
+      child: Material(
+        color: kColorWhite,
+        shape: const CircleBorder(),
+        child: InkWell(
+          customBorder: const CircleBorder(),
+          onTap: onTap,
+          child: Padding(
+            padding: const EdgeInsets.all(8),
+            child: FaIcon(icon, size: 16, color: kMainColor),
           ),
         ),
       ),

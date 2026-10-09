@@ -1,30 +1,45 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility that Flutter provides. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-
-import 'package:flutter_my_portfolio/main.dart';
+import 'package:flutter_my_portfolio/constant/data.dart';
+import 'package:flutter_my_portfolio/screens/sections/about_me_section.dart';
+import 'package:flutter_my_portfolio/screens/sections/project_section.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+  test('portfolio content is populated', () {
+    expect(Data.name, isNotEmpty);
+    expect(Data.experiences, isNotEmpty);
+    expect(Data.projects, isNotEmpty);
+    expect(Data.socialLinks, isNotEmpty);
+  });
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+  testWidgets('about section shows the intro and education', (tester) async {
+    await tester.pumpWidget(
+      const MaterialApp(
+        home: Scaffold(
+          body: SingleChildScrollView(child: AboutMeSection()),
+        ),
+      ),
+    );
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
+    expect(find.text('About me'), findsOneWidget);
+    expect(find.text(Data.educationTitle), findsOneWidget);
+    expect(find.textContaining('software engineer'), findsOneWidget);
+  });
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+  testWidgets('projects section lists each project', (tester) async {
+    await tester.pumpWidget(
+      const MaterialApp(
+        home: Scaffold(
+          body: SingleChildScrollView(child: ProjectSection()),
+        ),
+      ),
+    );
+
+    expect(find.text('Delivery App'), findsOneWidget);
+    expect(find.text('Social Media App'), findsOneWidget);
+    expect(
+      find.text('Project Management App for Construction Firm'),
+      findsOneWidget,
+    );
   });
 }
