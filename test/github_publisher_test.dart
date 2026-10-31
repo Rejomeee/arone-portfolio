@@ -116,4 +116,76 @@ void main() {
     expect(calls, 1);
     publisher.close();
   });
+  test(
+    'create followed by repeated updates bypasses cached metadata with the same token',
+    () async {
+      final cache = <String, http.Response>{};
+      final metadataUrls = <String>[];
+      var version = 0;
+      final publisher = GitHubPublisher(
+        client: MockClient((request) async {
+          expect(request.headers['Authorization'], 'Bearer test-only-token');
+          if (request.method == 'GET') {
+            metadataUrls.add(request.url.toString());
+            // Model a browser/proxy retaining every response, including a 404.
+            return cache.putIfAbsent(
+              request.url.toString(),
+              () => version == 0
+                  ? http.Response('{"message":"Not Found"}', 404)
+                  : http.Response(
+                      jsonEncode({'type': 'file', 'sha': 'blob-$version'}),
+                      200,
+                    ),
+            );
+          }
+          final body = jsonDecode(request.body);
+          expect(body['sha'], version == 0 ? isNull : 'blob-$version');
+          version++;
+          return http.Response(
+            jsonEncode({
+              'commit': {'sha': 'commit-$version'},
+            }),
+            version == 1 ? 201 : 200,
+          );
+        }),
+      );
+      for (var i = 0; i < 3; i++) {
+        await publisher.publish('test-only-token', Data.content);
+      }
+      expect(version, 3);
+      expect(metadataUrls.toSet(), hasLength(3));
+      publisher.close();
+    },
+  );
+
+  test('missing-SHA validation is distinguished from branch rules', () async {
+    for (final entry in {
+      '{"message":"Invalid request. sha wasn’t supplied."}': 'file version',
+      '{"message":"Changes must be made through a pull request."}':
+          'branch rules',
+      '{"message":"Validation Failed"}': 'validate this update',
+    }.entries) {
+      final publisher = GitHubPublisher(
+        client: MockClient((request) async {
+          if (request.method == 'GET') {
+            return http.Response('{"type":"file","sha":"current"}', 200);
+          }
+          return http.Response.bytes(utf8.encode(entry.key), 422);
+        }),
+      );
+      await expectLater(
+        publisher.publish('test-only-token', Data.content),
+        throwsA(
+          isA<GitHubPublishException>()
+              .having(
+                (error) => error.message,
+                'specific rejection',
+                contains(entry.value),
+              )
+              .having((error) => error.message, 'status code', contains('422')),
+        ),
+      );
+      publisher.close();
+    }
+  });
 }

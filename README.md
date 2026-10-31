@@ -69,7 +69,8 @@ or shared credentials are embedded in the site.
 
 The token is held only in memory, never in local/session storage, exported JSON,
 URLs, or the repository. Locking, refreshing, or **Disconnect GitHub** forgets it.
-The client reads the file SHA before writing; GitHub rejects conflicting writes
+Each publish reads fresh file metadata using a unique request URL, avoiding
+cached missing-file responses or old SHAs after an earlier publish. GitHub rejects conflicting writes
 instead of the editor automatically retrying an overwrite. Branch rules can
 still require a different publishing workflow; errors leave the draft intact.
 

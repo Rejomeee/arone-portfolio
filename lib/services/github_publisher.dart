@@ -18,6 +18,7 @@ class GitHubPublishResult {
 class GitHubPublisher {
   GitHubPublisher({http.Client? client}) : _client = client ?? http.Client();
   final http.Client _client;
+  static int _metadataRequest = 0;
   static const repository = 'Rejomeee/arone-portfolio';
   static const branch = 'master';
   static const contentPath = 'content/portfolio.json';
@@ -45,7 +46,19 @@ class GitHubPublisher {
       'X-GitHub-Api-Version': '2022-11-28',
     };
     final current = await _client
-        .get(uri.replace(queryParameters: {'ref': branch}), headers: headers)
+        .get(
+          // A cached 404 after creation, or an old SHA after an update, makes
+          // the next PUT fail. Use a new URL for every metadata lookup. Do not
+          // add Cache-Control headers: GitHub's browser CORS policy excludes them.
+          uri.replace(
+            queryParameters: {
+              'ref': branch,
+              'v':
+                  '${DateTime.now().microsecondsSinceEpoch}-${_metadataRequest++}',
+            },
+          ),
+          headers: headers,
+        )
         .timeout(const Duration(seconds: 15));
     String? sha;
     if (current.statusCode == 200) {
@@ -59,7 +72,7 @@ class GitHubPublisher {
       }
       sha = metadata['sha'] as String;
     } else if (current.statusCode != 404) {
-      _reject(current.statusCode);
+      _reject(current);
     }
     final response = await _client
         .put(
@@ -74,7 +87,7 @@ class GitHubPublisher {
         )
         .timeout(const Duration(seconds: 15));
     if (response.statusCode != 200 && response.statusCode != 201) {
-      _reject(response.statusCode);
+      _reject(response);
     }
     final result = _object(response);
     final commit = result['commit'];
@@ -103,7 +116,29 @@ class GitHubPublisher {
     );
   }
 
-  Never _reject(int status) {
+  Never _reject(http.Response response) {
+    final status = response.statusCode;
+    var detail = '';
+    try {
+      final body = jsonDecode(utf8.decode(response.bodyBytes));
+      if (body is Map) {
+        detail = '${body['message'] ?? ''} ${jsonEncode(body['errors'] ?? [])}'
+            .toLowerCase();
+      }
+    } catch (_) {
+      // Classify known errors without displaying arbitrary response bodies.
+    }
+    if ([403, 409, 422].contains(status) &&
+        [
+          'protected branch',
+          'repository rule',
+          'push declined',
+          'through a pull request',
+        ].any(detail.contains)) {
+      throw GitHubPublishException(
+        'GitHub branch rules blocked direct publishing (HTTP $status). Your draft is still here; use a pull request for this repository.',
+      );
+    }
     switch (status) {
       case 401:
         throw const GitHubPublishException(
@@ -111,21 +146,35 @@ class GitHubPublisher {
           forgetToken: true,
         );
       case 403:
+        if (response.headers['x-ratelimit-remaining'] == '0' ||
+            detail.contains('rate limit')) {
+          throw const GitHubPublishException(
+            'GitHub’s rate limit was reached (HTTP 403). Wait before retrying. Your draft is still here.',
+          );
+        }
         throw const GitHubPublishException(
-          'GitHub denied access. Check Contents read/write permission and branch rules. If rate limited, try again later.',
+          'GitHub denied access (HTTP 403). Check this token’s repository access and Contents read/write permission.',
         );
       case 404:
         throw const GitHubPublishException(
-          'The repository or master branch is not accessible with this token.',
+          'The repository or master branch is not accessible with this token (HTTP 404).',
         );
       case 409:
-      case 422:
         throw const GitHubPublishException(
-          'GitHub rejected the update. The file may have changed during publishing, or a branch rule may block it. Your draft is still here.',
+          'GitHub reported a file-version conflict (HTTP 409). Your draft is still here. Publish again to read the latest version; no overwrite was retried automatically.',
+        );
+      case 422:
+        if (detail.contains('sha')) {
+          throw const GitHubPublishException(
+            'GitHub rejected the file version (HTTP 422). Your draft is still here. Try Publish again to read the latest version.',
+          );
+        }
+        throw const GitHubPublishException(
+          'GitHub could not validate this update (HTTP 422). Your draft is still here. Check the repository’s publishing requirements.',
         );
       default:
-        throw const GitHubPublishException(
-          'Publishing could not be confirmed. Check GitHub before retrying. Your draft is still here.',
+        throw GitHubPublishException(
+          'Publishing could not be confirmed (HTTP $status). Check GitHub before retrying. Your draft is still here.',
         );
     }
   }
