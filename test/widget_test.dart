@@ -5,6 +5,8 @@ import 'package:flutter_my_portfolio/screens/sections/about_me_section.dart';
 import 'package:flutter_my_portfolio/screens/sections/project_section.dart';
 
 void main() {
+  TestWidgetsFlutterBinding.ensureInitialized();
+  setUp(Data.initialize);
   test('portfolio content is populated', () {
     expect(Data.name, isNotEmpty);
     expect(Data.experiences, isNotEmpty);
@@ -15,9 +17,7 @@ void main() {
   testWidgets('about section shows the intro and education', (tester) async {
     await tester.pumpWidget(
       const MaterialApp(
-        home: Scaffold(
-          body: SingleChildScrollView(child: AboutMeSection()),
-        ),
+        home: Scaffold(body: SingleChildScrollView(child: AboutMeSection())),
       ),
     );
 
@@ -29,9 +29,7 @@ void main() {
   testWidgets('projects section lists each project', (tester) async {
     await tester.pumpWidget(
       const MaterialApp(
-        home: Scaffold(
-          body: SingleChildScrollView(child: ProjectSection()),
-        ),
+        home: Scaffold(body: SingleChildScrollView(child: ProjectSection())),
       ),
     );
 

@@ -10,12 +10,16 @@ class ReactiveInputField extends StatelessWidget {
     required this.title,
     this.validationMessages,
     this.maxLines = 1,
+    this.keyboardType,
+    this.autofillHints,
   });
 
   final String formControlName;
   final String title;
   final Map<String, ValidationMessageFunction>? validationMessages;
   final int maxLines;
+  final TextInputType? keyboardType;
+  final Iterable<String>? autofillHints;
 
   @override
   Widget build(BuildContext context) {
@@ -27,15 +31,17 @@ class ReactiveInputField extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(title, style: kTextSub.copyWith(color: kColorBlack)),
-        const SizedBox(height: 6),
         ReactiveTextField<String>(
           formControlName: formControlName,
           maxLines: maxLines,
+          keyboardType: keyboardType,
+          autofillHints: autofillHints,
           validationMessages: validationMessages,
           style: kTextSub,
           cursorColor: kMainColor,
           decoration: InputDecoration(
+            labelText: title,
+            floatingLabelBehavior: FloatingLabelBehavior.auto,
             filled: true,
             fillColor: kColorWhite,
             contentPadding: EdgeInsets.symmetric(

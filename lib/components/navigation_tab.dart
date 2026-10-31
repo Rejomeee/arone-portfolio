@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../constant/style.dart';
 
 class NavigationTab extends StatelessWidget {
@@ -8,34 +7,59 @@ class NavigationTab extends StatelessWidget {
     required this.title,
     required this.icon,
     required this.onTap,
+    this.selected = false,
+    this.compact = false,
   });
-
   final String title;
   final IconData icon;
   final VoidCallback onTap;
-
+  final bool selected;
+  final bool compact;
   @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 2),
+  Widget build(BuildContext context) => Padding(
+    padding: EdgeInsets.symmetric(vertical: compact ? 1 : 3),
+    child: Semantics(
+      selected: selected,
       child: Material(
-        color: Colors.transparent,
+        color: selected ? kCardTint : Colors.transparent,
+        borderRadius: BorderRadius.circular(12),
         child: InkWell(
           onTap: onTap,
-          borderRadius: BorderRadius.circular(10),
-          hoverColor: kColorWhite.withValues(alpha: 0.14),
+          borderRadius: BorderRadius.circular(12),
+          focusColor: kMainColor.withValues(alpha: 0.15),
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+            padding: EdgeInsets.symmetric(
+              horizontal: 14,
+              vertical: compact ? 8 : 14,
+            ),
             child: Row(
               children: [
-                Icon(icon, color: kColorWhite, size: 18),
-                const SizedBox(width: 10),
-                Text(title, style: kTextSub.copyWith(color: kColorWhite)),
+                Icon(
+                  icon,
+                  color: selected ? kMainColor : kTextColorGrey,
+                  size: 20,
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Text(
+                    title,
+                    style: kTextSub.copyWith(
+                      color: selected ? kMainColor : kTextColorGrey,
+                      fontWeight: selected ? FontWeight.w700 : FontWeight.w500,
+                    ),
+                  ),
+                ),
+                if (selected)
+                  const Icon(
+                    Icons.arrow_forward_rounded,
+                    color: kMainColor,
+                    size: 16,
+                  ),
               ],
             ),
           ),
         ),
       ),
-    );
-  }
+    ),
+  );
 }

@@ -17,13 +17,10 @@ class ToolChips extends StatelessWidget {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
             decoration: BoxDecoration(
-              color: kBadgeColorGreen,
+              color: kCardTint,
               borderRadius: BorderRadius.circular(20),
             ),
-            child: Text(
-              tool,
-              style: kTextCaption.copyWith(color: kColorWhite),
-            ),
+            child: Text(tool, style: kTextCaption.copyWith(color: kMainColor)),
           ),
       ],
     );

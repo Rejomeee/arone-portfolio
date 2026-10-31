@@ -32,7 +32,7 @@ class _RoleBlock extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final details = role.details.skip(1);
+    final details = role.details.where((row) => row.label == 'Description');
     return Padding(
       padding: const EdgeInsets.only(top: 14),
       child: Column(
@@ -43,8 +43,6 @@ class _RoleBlock extends StatelessWidget {
           Text(role.headline.label, style: kTextCaption),
           const SizedBox(height: 10),
           for (final row in details) ...[
-            Text(row.label, style: kTextCaption),
-            const SizedBox(height: 2),
             Text(row.value, style: kTextBody.copyWith(color: kTextColorGrey)),
             const SizedBox(height: 10),
           ],

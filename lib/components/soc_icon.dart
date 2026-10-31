@@ -20,13 +20,13 @@ class SocIcon extends StatelessWidget {
     return Tooltip(
       message: tooltip ?? '',
       child: Material(
-        color: kColorWhite,
+        color: kBackgroundColor,
         shape: const CircleBorder(),
         child: InkWell(
           customBorder: const CircleBorder(),
           onTap: onTap,
           child: Padding(
-            padding: const EdgeInsets.all(8),
+            padding: const EdgeInsets.all(14),
             child: FaIcon(icon, size: 16, color: kMainColor),
           ),
         ),

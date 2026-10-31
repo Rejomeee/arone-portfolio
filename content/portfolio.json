@@ -1,0 +1,196 @@
+{
+  "schemaVersion": 1,
+  "profile": {
+    "webTitle": "Arone Jerome - Mobile Software Engineer",
+    "name": "Arone Jerome Malicse",
+    "shortName": "Arone Jerome",
+    "role": "Mobile Software Engineer",
+    "phoneNumber": "09924207736",
+    "email": "arone.portfolio@gmail.com",
+    "location": "General Trias, Cavite",
+    "birthday": "12 September",
+    "cvUrl": "https://drive.google.com/uc?export=download&id=1Yp_-zJ38INLrsxkU65GG67PQbGgtmQnj",
+    "githubUrl": "https://github.com/Rejomeee/",
+    "linkedInUrl": "https://www.linkedin.com/in/arone-jerome-malicse-106a85188/",
+    "instagramUrl": "https://www.instagram.com/rejomeee/",
+    "facebookUrl": "https://www.facebook.com/jejeromeee/"
+  },
+  "hero": {
+    "eyebrow": "HELLO, I’M ARONE JEROME",
+    "headline": "I build mobile experiences with Flutter.",
+    "description": "Mobile software engineer working across Flutter, native Android, and iOS—from product interfaces to platform integrations.",
+    "specialties": [
+      "Flutter & Dart",
+      "Android & iOS",
+      "Native integrations"
+    ]
+  },
+  "about": {
+    "paragraphs": [
+      "I'm a mobile software engineer who looks for practical solutions to everyday problems. Flutter is where I'm strongest. I ship with it, and I connect it to native Android and iOS when the product needs to go deeper. I also work with React on the web.",
+      "I use AI as part of how I build, and I'm comfortable putting it to work on real product problems. I like working with a team, and I care about clear communication, solid testing, and an experience people actually enjoy.",
+      "I’m always up for a new challenge—especially one that pushes me to learn and build something useful."
+    ],
+    "educationTitle": "Bachelor of Science in Information Technology",
+    "educationDetail": "2015 - 2019 · AMA Computer College - Cavite"
+  },
+  "projects": {
+    "intro": "A closer look at the products I’ve helped build and the work behind them.",
+    "items": [
+      {
+        "title": "Project Management App for Construction Firm",
+        "overview": "An internal iOS app bringing project planning, calendars, and team communication into one place.",
+        "summary": "My role was to develop an iOS application using Flutter and Dart, with Google Maps, REST APIs, Bloc, and Xcode. It was deployed to the App Store by invitation, because it was exclusive to one company.",
+        "features": [
+          "Project management",
+          "Realtime chat with image, voice, and text",
+          "Realtime notification",
+          "Project calendar",
+          "Image uploading with compression",
+          "User profile management",
+          "User authentication"
+        ],
+        "tools": [
+          "Flutter",
+          "Laravel",
+          "Xcode",
+          "Google Map Services",
+          "Socket.IO",
+          "Rive"
+        ],
+        "coverLabel": "PROJECT COORDINATION",
+        "coverHeadline": "Plan. Connect. Build."
+      },
+      {
+        "title": "Delivery App",
+        "overview": "A delivery app connecting driver booking with messaging, authentication, and payments.",
+        "summary": "My role was to develop the front-end and back-end modules and integrate the APIs.",
+        "features": [
+          "Driver booking",
+          "User authentication with OTP",
+          "Social authentication",
+          "Profile management",
+          "Messaging",
+          "Payment gateway"
+        ],
+        "tools": [
+          "Flutter",
+          "Android Studio",
+          "Firebase",
+          "Promotexter"
+        ],
+        "coverLabel": "DELIVERY & BOOKING",
+        "coverHeadline": "From booking to delivery."
+      },
+      {
+        "title": "Social Media App",
+        "overview": "An Android and iOS social app with image sharing, filters, and realtime conversations.",
+        "summary": "My role was to develop and integrate APIs for the Android and iOS modules.",
+        "features": [
+          "Upload images",
+          "Filter creation",
+          "Realtime chat",
+          "User authentication with social login"
+        ],
+        "tools": [
+          "Ionic",
+          "Opoink",
+          "Zend Framework",
+          "Android Studio"
+        ],
+        "coverLabel": "SOCIAL & MESSAGING",
+        "coverHeadline": "Keep the conversation going."
+      }
+    ]
+  },
+  "experiences": [
+    {
+      "company": "Maya Philippines, Inc.",
+      "roles": [
+        {
+          "title": "Software Engineer",
+          "period": "May 18, 2022 – Present",
+          "description": "I work on Maya — savings, loans, and cards — and on Maya Business, the Maya app for businesses. The work is Flutter-first, including the places where Flutter talks to native Android and iOS.",
+          "tools": [
+            "Flutter",
+            "Dart",
+            "Android",
+            "iOS",
+            "Git"
+          ]
+        }
+      ]
+    },
+    {
+      "company": "Outsource",
+      "roles": [
+        {
+          "title": "Lead Mobile Software Engineer",
+          "period": "Nov. 2021",
+          "description": "I was assigned to develop an iOS app. We used Flutter on iPad and iPhone, and I also deployed the application to the App Store.",
+          "tools": [
+            "Flutter",
+            "Dart",
+            "Git",
+            "Android Studio",
+            "Firebase",
+            "Xcode",
+            "Google Map Services",
+            "Socket"
+          ]
+        }
+      ]
+    },
+    {
+      "company": "LEENTech Network Solutions",
+      "roles": [
+        {
+          "title": "Hybrid Software Engineer / Fullstack Mobile Developer",
+          "period": "Aug. 2020",
+          "description": "I was assigned to develop an Android app using Flutter for the front end, and to create and integrate APIs.",
+          "tools": [
+            "Flutter",
+            "API",
+            "Firebase",
+            "Laravel",
+            "Dart",
+            "Xcode",
+            "Git",
+            "Android Studio"
+          ]
+        },
+        {
+          "title": "Fullstack Software Engineer",
+          "period": "Aug. 2019",
+          "description": "We developed a self-monitoring app. I was assigned to the front and back of the mobile app using Ionic, and to integrate Laravel APIs.",
+          "tools": [
+            "Ionic",
+            "Angular",
+            "NodeJs",
+            "Bootstrap",
+            "Git",
+            "Cpanel"
+          ]
+        },
+        {
+          "title": "Fullstack Web Developer",
+          "period": "Jan. 2019",
+          "description": "This was my first assignment building a website. I supported a maintenance project, kept it stable, and enhanced it for the client's needs. Later I assisted the mobile department with APIs.",
+          "tools": [
+            "PHP",
+            "Zend Framework",
+            "API",
+            "Cpanel",
+            "Git",
+            "Bootstrap"
+          ]
+        }
+      ]
+    }
+  ],
+  "contact": {
+    "heading": "Have a project in mind?",
+    "description": "Let’s talk. Tell me what you’re building and where I can help."
+  },
+  "footer": "Built with Flutter. Made with care."
+}

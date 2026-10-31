@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - master
+    paths-ignore:
+      - "content/**"
   pull_request:
     branches:
       - master
@@ -34,7 +36,9 @@ jobs:
         run: flutter test
 
       - name: Build release project
-        run: flutter build web --release --base-href /arone-portfolio/
+        run: |
+          flutter build web --release --base-href /arone-portfolio/
+          python3 tool/prepare_web.py
 
       - name: Upload production-ready build files
         uses: actions/upload-artifact@v4

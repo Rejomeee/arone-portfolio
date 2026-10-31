@@ -6,11 +6,17 @@ class CloudBackground extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const IgnorePointer(
-      child: RiveAnimation.asset(
-        'assets/animations/clouds_bg.riv',
-        fit: BoxFit.cover,
-        alignment: Alignment.center,
+    if (MediaQuery.disableAnimationsOf(context)) {
+      return const SizedBox.expand();
+    }
+    return const Opacity(
+      opacity: 0.24,
+      child: IgnorePointer(
+        child: RiveAnimation.asset(
+          'assets/animations/clouds_bg.riv',
+          fit: BoxFit.cover,
+          alignment: Alignment.center,
+        ),
       ),
     );
   }

@@ -27,12 +27,18 @@ class PortfolioProject {
   const PortfolioProject({
     required this.title,
     required this.summary,
+    required this.overview,
     required this.features,
     required this.tools,
+    required this.coverLabel,
+    required this.coverHeadline,
   });
 
+  final String coverLabel;
+  final String coverHeadline;
   final String title;
   final String summary;
+  final String overview;
   final List<String> features;
   final List<String> tools;
 }
